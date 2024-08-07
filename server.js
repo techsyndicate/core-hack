@@ -12,7 +12,9 @@ const express = require('express'),
 
 const indexRouter = require('./routers/indexRouter'),
       loginRouter = require('./routers/loginRouter'),
-      regRouter = require('./routers/regRouter')
+      regRouter = require('./routers/regRouter'),
+      spaceguyRouter = require('./routers/spaceguyRouter'),
+      agencyRouter = require('./routers/agencyRouter')
 
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
@@ -33,6 +35,8 @@ mongoose.connect(process.env.MONGO_URI, console.log('MONGODB CONNECTED'))
 app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, regRouter)
+app.use('/spaceguy', spaceguyRouter)
+app.use('/agency', agencyRouter)
 
 app.get('/logout', (req, res) => {
     req.logout((err) => {

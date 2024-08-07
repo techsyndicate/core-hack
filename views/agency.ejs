@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% if (userdata.hasPlan === true) { %>
+        Your secret code, make sure to not share it with anyone, only with your spaceguys
+        <%= userdata.userid %>
+    <% } %>
+    
+    <% if (userdata.hasPlan === false) { %>
+        paise do bhai mujhe features chahiye to 🤑🤑🤑
+    
+        <form action="/agency/buy" method="post">
+            <button>BUY PASS 🤑🤑</button>
+        </form>
+    <% } %>
+</body>
+</html>
