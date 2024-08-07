@@ -14,6 +14,7 @@ const indexRouter = require('./routers/indexRouter'),
       loginRouter = require('./routers/loginRouter'),
       regRouter = require('./routers/regRouter'),
       spaceguyRouter = require('./routers/spaceguyRouter'),
+      aiRouter = require('./routers/aiRouter'),
       agencyRouter = require('./routers/agencyRouter')
 
 app.use(express.static('public'))
@@ -36,6 +37,7 @@ app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, regRouter)
 app.use('/spaceguy', spaceguyRouter)
+app.use('/ai', aiRouter)
 app.use('/agency', agencyRouter)
 
 app.get('/logout', (req, res) => {

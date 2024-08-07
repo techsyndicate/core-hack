@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI</title>
+</head>
+<body>
+    <h1 id="status">Jarvis is currently sleeping 😪</h1>
+    <p id="btnText">Press button to wake up Jarvis</p>
+    <p id="thinking" style="display: none;">Jarvis is thinking... </p>
+    <button id="button">Wake Jarvis</button>
+</body>
+<script>
+    const status = document.getElementById('status')
+    const btnText = document.getElementById('btnText')
+    const button = document.getElementById('button')
+    const thinking = document.getElementById('thinking')
+
+    button.addEventListener('click', async (e) => {
+        button.disabled = true
+        event.preventDefault()
+
+        console.log('button pressed')
+        status.innerText = "Jarvis is now awake 🙂"
+        btnText.innerText = "Jarvis is LISTENING"
+
+        var userSpeech = ''
+        try {
+            const result = await startSpeechRecognition();
+            console.log(result.length)
+            if (!result) {
+                return btnText.innerText = `Oops! Jarvis couldn't hear you.`;
+            }
+            userSpeech = result
+            btnText.innerText = `You said: ${result}`;
+            thinking.style.display = "block"
+
+            try {
+                googleKoMaro(userSpeech).then(async response => {
+                    console.log(response)
+                    if (response.length > 500) {
+                        response = response.slice(0, 70)
+                        btnText.innerText = response + "..."
+                    }
+                    thinking.style.display = "none"
+                    btnText.innerText = response
+
+                    try {
+                        const result = await speakText(response).then(() => {
+                            button.innerText = "Do it again"
+                            button.disabled = false
+                        })
+                    } catch (error) {
+                        console.error(error);
+                        btnText.innerText = `Oops an error occurred.`;
+                        button.innerText = "Do it again"
+                        button.disabled = false
+                    }
+                })
+            } catch {
+                btnText.innerText = `Oops an error occurred.`;
+                button.innerText = "Do it again"
+                button.disabled = false
+            }
+        } catch {
+            console.log('dadas')
+            btnText.innerText = `Oops an error occurred.`;
+            button.innerText = "Do it again"
+            button.disabled = false
+        }
+
+    })
+
+    function speakText(text) {
+            return new Promise((resolve, reject) => {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.onend = () => resolve('Speech synthesis finished.');
+                    utterance.onerror = (event) => reject(`Error occurred in synthesis: ${event.error}`);
+                    window.speechSynthesis.speak(utterance);
+                } else {
+                    reject('Browser does not support the Web Speech API');
+                }
+            });
+        }
+
+    function startSpeechRecognition() {
+        return new Promise((resolve, reject) => {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                console.log('listening')
+
+                recognition.onresult = (event) => {
+                    const speechResult = event.results[0][0].transcript;
+                    resolve(speechResult);
+                };
+
+                recognition.onerror = (event) => {
+                    reject(`Error occurred in recognition: ${event.error}`);
+                };
+
+                recognition.onend = () => {
+                    console.log('Recognition ended');
+                };
+
+                recognition.start();
+            } else {
+                reject('Browser does not support the Web Speech API');
+            }
+        });
+    }
+
+    function googleKoMaro(prompt) {
+            return new Promise((resolve, reject) => {
+                fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBOPaHyQKKBSHp2NHAVEnDfqF-eSxEacso", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "contents": [{
+                            "parts": [{
+                                "text": prompt
+                            }]}
+                        ]})
+                })
+                .then(rawResponse => {
+                    if (!rawResponse.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return rawResponse.json();
+                })
+                .then(content => {
+                    console.log(content);
+                    if (content.candidates[0].finishReason == "MAX_TOKENS") {
+                        text.innerText = "The service is unavailable right now. Please try again after a minute or so.";
+                    }
+                    console.log(content.candidates[0].content.parts[0].text);
+                    resolve(content.candidates[0].content.parts[0].text);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    reject(error);
+                });
+            });
+        }
+
+</script>
+</html>

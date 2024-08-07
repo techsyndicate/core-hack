@@ -12,5 +12,8 @@
         <input type="password" required name="password" placeholder="Password">
         <button type="submit">Submit</button>
     </form>
+    <% if (messages.error) { %>
+        <p><%= messages.error %></p>
+    <% } %>
 </body>
 </html>
