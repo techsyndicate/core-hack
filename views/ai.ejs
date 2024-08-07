@@ -37,7 +37,7 @@
             thinking.style.display = "block"
 
             try {
-                googleKoMaro(userSpeech).then(async response => {
+                googleKoMaro(userSpeech).then(async response => { // YAHA PE USER SPEACH KI JAGAH TRAINING DATA LIKHDENA SEE SYNAPSE CODE TECHSYNDICATE REPO
                     console.log(response)
                     if (response.length > 500) {
                         response = response.slice(0, 70)
