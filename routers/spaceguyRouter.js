@@ -42,4 +42,12 @@ router.get('/clean', ensureAuthenticated, ensurePlan, (req,res)=>{
     res.render('junk')
 })
 
+
+router.get('/health', ensureAuthenticated, ensurePlan, (req, res)=>{
+    res.render('health')
+})
+
+router.get('/friend', ensureAuthenticated, ensurePlan, async (req,res) => {
+    res.render('ai')
+})
 module.exports = router
