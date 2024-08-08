@@ -4,10 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        button {
+            padding: 1.5vmin 2vmin;
+            border-radius: 10px;
+            background-color: #fd532f;
+            color: black;
+            font-size: 3vh;
+        }
+
+        #buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1vh;
+        }
+    </style>
 </head>
 <body>
-    yo spaceguy
+    <div id="main">
+        <h1>Hi, <%= user.fname +' '+ user.lname %></h1>
 
-    
+        <div id="buttons">
+
+            <button>Add Agency Code</button>
+            
+            <button>Report Emergency</button>
+            
+            <button>Start Junk Cleaning</button>
+            <button>Track my location</button>
+            <button>View Inventory</button>
+            <button>View Health Stats</button>
+            <button>Talk to JARVIS</button>
+        </div>
+    </div>
 </body>
 </html>

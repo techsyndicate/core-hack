@@ -3,8 +3,9 @@ const User = require('../schemas/userSchema')
 
 const router = require('express').Router()
 
-router.get('/',ensureAuthenticated, ensurePlan, async (req,res) => {
-    res.render('spaceguy')
+router.get('/',ensureAuthenticated, ensurePlan, async (req,res) => { 
+    console.log(req.user)
+    res.render('spaceguy', {user: req.user})
 })
 
 router.get('/tracker',ensureAuthenticated, ensurePlan, async (req, res) => {
@@ -17,9 +18,7 @@ router.get('/code', ensureAuthenticated,(req, res) => {
 
 router.post('/code', async (req,res) => {
     const code = req.body.code
-    // console.log(code)
     const spaceguy = await User.findOne({userid: code})
-    // console.log(spaceguy)
     if(!spaceguy){
         return ('No spaceguy with this code');
     }
@@ -35,7 +34,7 @@ router.post('/code', async (req,res) => {
 })
 
 router.post('/emergency', ensureAuthenticated, ensurePlan, (req,res)=>{
-
+res.send('woah bbg you in troubleeee')
 })
 
 router.get('/clean', ensureAuthenticated, ensurePlan, (req,res)=>{

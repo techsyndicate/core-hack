@@ -1,24 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
     <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+            border: 1px solid #545454;
+            margin-top: 20vh;
+            width: 60vh;
+            padding: 1vmin;
+
+        }
+
+        #main form {
+            width: 100%;
+            margin: 3vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1vmin;
+        }
+
+        form input {
+            background-color: transparent;
+            padding: 10px;
+            border: 1px solid #545454;
+            font-size: 1.1em;
+            border-radius: 10px;
+            width: 80%;
+            margin: 1vmin 0;
+        }
+
+        form label {
+            font-size: 1.1em;
+        }
+
+        form button {
+            color: #111;
+            background-color: #fd532f;
+            padding: 1.5vmin 2vmin;
+            border-radius: 10px;
+            font-size: 3vh;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        p {
+            color: #818080;
+            text-align: center;
+            width: 90%;
+        }
+
+        h1 {
+            color: #fd532f;
+        }
+    </style>
 </head>
+
 <body>
-    <% if (userdata.hasPlan === true) { %>
+    <% if (userdata.hasPlan===true) { %>
         Your secret code, make sure to not share it with anyone, only with your spaceguys
         <%= userdata.userid %>
-    <% } %>
-    
-    <% if (userdata.hasPlan === false) { %>
-        paise do bhai mujhe features chahiye to 🤑🤑🤑
-    
-        <form action="/agency/buy" method="post">
-            <button>BUY PASS 🤑🤑</button>
-        </form>
+            <% } %>
 
-        <a href="/spaceguy/code">already have a pass???</a>
-    <% } %>
+                <% if (userdata.hasPlan===false) { %>
+                    <div id="main">
+                        <h1>Buy Agency Pass</h1>
+                        <form action="/agency/buy" method="post">
+                            <p style="color: #ffffff;">Buy a pass for your spaceguy to use as proof of employment. This provides your spaceguy with
+                                access to all the features we have to offer.</p>
+                            <button>Buy a pass</button>
+                            <p>
+                                Already have a pass from your agency? <br>
+                                <a href="/spaceguy/code">Enter it here.</a>
+                            </p>
+                        </form>
+
+                    </div>
+                    <% } %>
 </body>
+
 </html>

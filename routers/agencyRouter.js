@@ -5,7 +5,6 @@ const User = require('../schemas/userSchema')
 
 router.get('/', ensureAuthenticated, async (req,res) => {
     const userdata=req.user
-    // console.log(userdata)
     res.render('agency',{userdata:userdata})
 })
 
