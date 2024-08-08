@@ -8,7 +8,8 @@ const express = require('express'),
     app = express(),
     passportInit = require('./utils/passport-config'),
     { ensureAuthenticated, forwardAuthenticated } = require('./utils/authenticate'),
-    PORT = process.env.PORT || 5000
+    PORT = process.env.PORT || 5000,
+    bodyParser = require('body-parser')
     engine = require('ejs-blocks');
 
 const indexRouter = require('./routers/indexRouter'),
@@ -25,6 +26,7 @@ app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: true }));
 passportInit(passport)
 app.use(flash())
 app.use(session({
@@ -42,7 +44,7 @@ app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, regRouter)
 app.use('/spaceguy', spaceguyRouter)
-app.use('/ai', aiRouter)
+app.use('/ai', ensureAuthenticated, aiRouter)
 app.use('/agency', agencyRouter)
 app.use('/sos', sosRouter)
 
