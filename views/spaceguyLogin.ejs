@@ -3,14 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+
+
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+            border: 1px solid #545454;
+            margin-top: 20vh;
+            width: 60vh;
+            padding: 1vmin;
+            
+        }
+        
+        #main form {
+            width: 100%;
+            margin: 3vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1vmin;
+        }
+
+        form input {
+            background-color: transparent;
+            padding: 10px;
+            border: 1px solid #545454;
+            font-size: 1.1em;
+            border-radius: 10px;
+            width: 80%;
+            margin: 2vmin 0;
+        }
+
+        form label {
+            font-size: 1.1em;
+        }
+
+        form button {
+            color: #111;
+            background-color: #fd532f;
+            padding: 1.5vmin 2vmin;
+            border-radius: 10px;
+            font-size: 3vh;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        } 
+        
+        p {
+            color: #818080;
+            text-align: center;
+            width: 70%;
+        }
+
+        h1 {
+            color: #fd532f;
+        }
+    </style>
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="/spaceguy/code" method="post">
-        <label for="code">Enter your enterprise code:</label>
-        <input type="code" required name="code" placeholder="code">
-        <button type="submit">Submit</button>
-    </form>
+    <div id="main">
+
+        <h1>Agency Code</h1>
+        <form action="/spaceguy/code" method="post">
+            <label for="code">Enter your agency code:</label>
+            <p>Agency codes look like: <br> xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx</p>
+            <input type="code" required name="code" placeholder="code">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>
