@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<style>
+    body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    }
+    #space {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    }
+    #stats {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    }
+    #instructions {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    }
+    #crosshair {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    }
+    #collected{
+        z-index: 100;
+        position: fixed;
+        top: 40px;
+        right: 50%;
+        z-index: 100;
+        display:none    
+    }
+    #collect{
+        z-index: 100;
+        position: fixed;
+        top: 40px;
+        right: 45%;
+        z-index: 100;
+        display:none    
+    }
+</style>
+</head>
+<body>
+<div id="space"></div>
+<div id="stats">
+    Junk Collected: <span id="junkCount">0</span>
+</div>
+<div id="collected">
+    Hey! You collected
+    <span id='collect'> </span>
+</div>
+<div id="instructions">
+    <h3>Controls:</h3>
+    <p>Mouse: Aim drone</p>
+    <p>W: Move forward</p>
+    <p>S: Move backward</p>
+    <p>A: Move left</p>
+    <p>D: Move right</p>
+    <p>Space: Move up</p>
+    <p>Shift: Move down</p>
+    <p>Click to lock mouse pointer</p>
+    <a href="/spaceguy" style="text-decoration: none; color:#fff">End Trip!</a>
+</div>
+<svg id="crosshair" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2"/>
+    <line x1="50" y1="0" x2="50" y2="100" stroke="#fff" stroke-width="2"/>
+    <line x1="0" y1="50" x2="100" y2="50" stroke="#fff" stroke-width="2"/>
+</svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+
+    let items = ['screw', 'rock', 'debris', 'screw', 'rock', 'debris', 'screw', 'rock', 'debris', 'screw', 'rock', 'debris', 'big rock', 'shiny metal']
+
+    const getRandInt = (min, max) => {
+        min = Math.ceil(min)
+        max = Math.floor(max)
+
+        return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+
+    let scene, camera, renderer, stars = [], junk = [];
+    let junkCollected = 0;
+    let controlledDrone = null;
+    let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false, moveUp = false, moveDown = false;
+    let cameraRotation = { x: 0, y: 0 };
+
+    function init() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('space').appendChild(renderer.domElement);
+
+    // Create stars
+    for(let i = 0; i < 1000; i++) {
+        const geometry = new THREE.SphereGeometry(0.1, 32, 32);
+        const material = new THREE.MeshBasicMaterial({color: 0xffffff});
+        const star = new THREE.Mesh(geometry, material);
+        star.position.set(
+        Math.random() * 200 - 100,
+        Math.random() * 200 - 100,
+        Math.random() * 200 - 100
+        );
+        stars.push(star);
+        scene.add(star);
+    }
+
+    // Create space junk
+    for(let i = 0; i < 50; i++) {
+        const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+        const material = new THREE.MeshBasicMaterial({color: 0xff0000});
+        const piece = new THREE.Mesh(geometry, material);
+        piece.position.set(
+        Math.random() * 20 - 10,
+        Math.random() * 20 - 10,
+        Math.random() * 20 - 10
+        );
+        junk.push(piece);
+        scene.add(piece);
+    }
+
+    // Create and launch drone immediately
+    launchDrone();
+
+    animate();
+    }
+
+    function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate stars
+    stars.forEach(star => {
+        star.rotation.x += 0.001;
+        star.rotation.y += 0.001;
+    });
+
+    // Move junk
+    junk.forEach(piece => {
+        piece.position.x += Math.random() * 0.01 - 0.005;
+        piece.position.y += Math.random() * 0.01 - 0.005;
+        piece.position.z += Math.random() * 0.01 - 0.005;
+    });
+
+    // Move controlled drone
+    if (controlledDrone) {
+        const speed = 0.1;
+        const direction = new THREE.Vector3();
+        camera.getWorldDirection(direction);
+        
+        if (moveForward) controlledDrone.position.add(direction.multiplyScalar(speed));
+        if (moveBackward) controlledDrone.position.sub(direction.multiplyScalar(speed));
+        if (moveLeft) controlledDrone.position.add(new THREE.Vector3().crossVectors(direction, new THREE.Vector3(0, 1, 0)).normalize().multiplyScalar(speed));
+        if (moveRight) controlledDrone.position.sub(new THREE.Vector3().crossVectors(direction, new THREE.Vector3(0, 1, 0)).normalize().multiplyScalar(speed));
+        if (moveUp) controlledDrone.position.y += speed;
+        if (moveDown) controlledDrone.position.y -= speed;
+        
+        // Collect junk
+        junk.forEach((piece, index) => {
+        if(controlledDrone.position.distanceTo(piece.position) < 0.5) {
+            scene.remove(piece);
+            junk.splice(index, 1);
+            junkCollected++;
+            document.getElementById('junkCount').textContent = junkCollected;
+            let rand = getRandInt(0,items.length);
+            item = items[rand];
+            console.log(item);
+            document.getElementById("collected").style.display = "block"
+            document.getElementById("collect").style.display = "block"
+            document.getElementById("collect").textContent = item
+            setTimeout(hideCollect, 3000)
+        }
+        });
+
+        // Update camera position to be in the drone
+        camera.position.copy(controlledDrone.position);
+    }
+
+    function hideCollect(){
+        document.getElementById("collected").style.display = "none"
+        document.getElementById("collect").style.display = "none"
+    }
+
+    // Apply camera rotation
+    camera.rotation.x = cameraRotation.y;
+    camera.rotation.y = cameraRotation.x;
+
+    renderer.render(scene, camera);
+    }
+
+    function launchDrone() {
+    const geometry = new THREE.ConeGeometry(0.2, 0.5, 32);
+    const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+    controlledDrone = new THREE.Mesh(geometry, material);
+    controlledDrone.position.set(0, 0, 0);
+    scene.add(controlledDrone);
+    
+    // Set initial camera position
+    camera.position.copy(controlledDrone.position);
+    }
+
+    init();
+
+    // Keyboard controls
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+
+    function onKeyDown(event) {
+    switch (event.code) {
+        case 'KeyW': moveForward = true; break;
+        case 'KeyS': moveBackward = true; break;
+        case 'KeyA': moveLeft = true; break;
+        case 'KeyD': moveRight = true; break;
+        case 'Space': moveUp = true; break;
+        case 'ShiftLeft': moveDown = true; break;
+    }
+    }
+
+    function onKeyUp(event) {
+    switch (event.code) {
+        case 'KeyW': moveForward = false; break;
+        case 'KeyS': moveBackward = false; break;
+        case 'KeyA': moveLeft = false; break;
+        case 'KeyD': moveRight = false; break;
+        case 'Space': moveUp = false; break;
+        case 'ShiftLeft': moveDown = false; break;
+    }
+    }
+
+    // Mouse controls for camera
+    document.addEventListener('mousemove', onMouseMove);
+
+    function onMouseMove(event) {
+    if (controlledDrone) {
+        const sensitivity = 0.002;
+        const deltaX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+        const deltaY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+        cameraRotation.x -= deltaX * sensitivity;
+        cameraRotation.y -= deltaY * sensitivity;
+
+        // Limit vertical rotation
+        cameraRotation.y = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, cameraRotation.y));
+    }
+    }
+
+    // Lock pointer for better mouse control
+    renderer.domElement.addEventListener('click', () => {
+    renderer.domElement.requestPointerLock();
+    });
+
+    window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+</body></html>

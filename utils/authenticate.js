@@ -16,4 +16,14 @@ function forwardAuthenticated(req, res, next) {
     } 
   }
 
-module.exports = { ensureAuthenticated, forwardAuthenticated };
+function ensurePlan(req, res, next) {
+  console.log(req.user)
+  if (req.user.hasPlan) {
+    return next();
+  }
+  else{
+    res.redirect('/agency')
+  } 
+}
+
+module.exports = { ensureAuthenticated, forwardAuthenticated, ensurePlan };
