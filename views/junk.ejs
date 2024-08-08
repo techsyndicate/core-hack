@@ -64,15 +64,22 @@
         z-index: 100;
         display:none    
     }
+
+    #endtripbutton{
+
+    }
 </style>
 </head>
 <body>
 <div id="space"></div>
 <div id="stats">
-    Junk Collected: <span id="junkCount">0</span>
+    Junk Collected: <span id="junkCount">0</span> <br><br>
+    <ul id="collection">
+
+    </ul>
 </div>
 <div id="collected">
-    Hey! You collected
+    Hey! You collected <br>
     <span id='collect'> </span>
 </div>
 <div id="instructions">
@@ -85,7 +92,10 @@
     <p>Space: Move up</p>
     <p>Shift: Move down</p>
     <p>Click to lock mouse pointer</p>
-    <a href="/spaceguy" style="text-decoration: none; color:#fff">End Trip!</a>
+    <form action="/spaceguy/clean" method="post">
+        <input type="hidden" value="" name="junklist" id="junklist">
+        <button type="submit" id="endtripbutton">End Trip!</button>
+    </form>
 </div>
 <svg id="crosshair" viewBox="0 0 100 100">
     <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2"/>
@@ -107,6 +117,7 @@
 
     let scene, camera, renderer, stars = [], junk = [];
     let junkCollected = 0;
+    let collection = {screw:0, rock:0, debris:0, bigRock: 0, shinyMetal: 0};
     let controlledDrone = null;
     let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false, moveUp = false, moveDown = false;
     let cameraRotation = { x: 0, y: 0 };
@@ -152,6 +163,22 @@
     animate();
     }
 
+    function updateCollection(){
+        const list = document.getElementById('collection')
+        var collectionText = JSON.stringify(collection)
+        document.getElementById('junklist').setAttribute('value', collectionText)
+        list.innerHTML = ''
+        for (var item in collection){
+            if (collection[item] != 0){
+                var listItem = document.createElement('li')
+                var text =  item + ' : ' + collection[item]
+                console.log(item, collection[item])
+                listItem.appendChild(document.createTextNode(text))
+                list.appendChild(listItem)
+            }
+        }
+    }
+
     function animate() {
     requestAnimationFrame(animate);
 
@@ -191,10 +218,21 @@
             let rand = getRandInt(0,items.length);
             item = items[rand];
             console.log(item);
-            document.getElementById("collected").style.display = "block"
-            document.getElementById("collect").style.display = "block"
+            document.getElementById("collected").style.display = "flex"
+            document.getElementById("collect").style.display = "flex"
             document.getElementById("collect").textContent = item
+
+            if (item=='shiny metal'){
+                item = 'shinyMetal'
+            }
+            if (item=='big rock'){
+                item = 'bigRock'
+            }
+            collection[item] +=1 
+            console.log(collection[item])
             setTimeout(hideCollect, 3000)
+
+            updateCollection()
         }
         });
 

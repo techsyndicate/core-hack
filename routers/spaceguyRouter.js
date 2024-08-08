@@ -42,6 +42,11 @@ router.get('/clean', ensureAuthenticated, ensurePlan, (req,res)=>{
     res.render('junk')
 })
 
+router.post('/clean', ensureAuthenticated, ensurePlan, (req, res)=>{
+    console.log(req.body.junklist)
+    res.redirect('/')
+})
+
 
 router.get('/health', ensureAuthenticated, ensurePlan, (req, res)=>{
     res.render('health')
