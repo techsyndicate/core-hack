@@ -41,7 +41,7 @@ app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, regRouter)
 app.use('/spaceguy', spaceguyRouter)
-app.use('/ai', aiRouter)
+app.use('/ai', ensureAuthenticated, aiRouter)
 app.use('/agency', agencyRouter)
 app.use('/sos', sosRouter)
 
