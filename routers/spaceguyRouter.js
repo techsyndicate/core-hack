@@ -54,4 +54,8 @@ router.get('/health', ensureAuthenticated, ensurePlan, (req, res)=>{
 router.get('/friend', ensureAuthenticated, ensurePlan, async (req,res) => {
     res.render('ai')
 })
+
+router.get('/food', ensureAuthenticated, ensurePlan, async (req, res) => {
+    res.render('food')
+})
 module.exports = router
