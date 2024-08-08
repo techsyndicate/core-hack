@@ -6,10 +6,10 @@
     <title>AI</title>
 </head>
 <body>
-    <h1 id="status">Jarvis is currently sleeping 😪</h1>
-    <p id="btnText">Press button to wake up Jarvis</p>
-    <p id="thinking" style="display: none;">Jarvis is thinking... </p>
-    <button id="button">Wake Jarvis</button>
+    <h1 id="status">Shambhu is currently sleeping 😪</h1>
+    <p id="btnText">Press button to wake up Shambhu</p>
+    <p id="thinking" style="display: none;">Shambhu is thinking... </p>
+    <button id="button">Wake Shambhu</button>
 </body>
 <script>
     const status = document.getElementById('status')
@@ -22,22 +22,22 @@
         event.preventDefault()
 
         console.log('button pressed')
-        status.innerText = "Jarvis is now awake 🙂"
-        btnText.innerText = "Jarvis is LISTENING"
+        status.innerText = "Shambhu is now awake 🙂"
+        btnText.innerText = "Shambhu is LISTENING"
 
         var userSpeech = ''
         try {
             const result = await startSpeechRecognition();
             console.log(result.length)
             if (!result) {
-                return btnText.innerText = `Oops! Jarvis couldn't hear you.`;
+                return btnText.innerText = `Oops! Shambhu couldn't hear you.`;
             }
             userSpeech = result
             btnText.innerText = `You said: ${result}`;
             thinking.style.display = "block"
 
             try {
-                googleKoMaro(userSpeech).then(async response => { // YAHA PE USER SPEACH KI JAGAH TRAINING DATA LIKHDENA SEE SYNAPSE CODE TECHSYNDICATE REPO
+                googleKoMaro("DONT USE CONTRACTED FORMS THIS IS A FORMAL CONVERSATION LIKE dont use isnt instead use is not. You are Shambhu, a virtual AI Companion, who helps an astronaut in maintaining their mental health. You act like a friend to them. You support them in their tough times. Talk to them as if you're their very own. VERY IMPORTANT: WHEREVER THERE IS A SPECIAL CHARACTER, REPLACE IT BY THEIR URL ENCODED FORM. Also, here's their information: Fname: <%= user.fname %> Lname: <%= user.fname %>. Here are some previous chats only refer to them and dont learn. NOTE: ONLY USE THE DATA PROVIDED NOTHING ELSE :" + ' ' + "<%= chats %>" + ' ' + "(there may not be any previous chats and dont mention about the chats if there aren't any) the chats are in the format [previous response, query of the user, time]. Provide a response in less than 75 words.", userSpeech).then(async response => { // YAHA PE USER SPEACH KI JAGAH TRAINING DATA LIKHDENA SEE SYNAPSE CODE TECHSYNDICATE REPO
                     console.log(response)
                     if (response.length > 500) {
                         response = response.slice(0, 70)
@@ -45,6 +45,29 @@
                     }
                     thinking.style.display = "none"
                     btnText.innerText = response
+                    encodedResponse = response.replace("'", "%27")
+                    encodedResponse = encodedResponse.replace('"', "%22")
+
+                    // console.log("1", encodedResponse, userSpeech)
+                    const response2 = await fetch('/ai/storeChat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "response": encodedResponse, "query": userSpeech})
+                    });
+
+                    const result = await response2.json();
+
+                    if (result.success) {
+                        console.log(result.message);
+                    } else {
+                        console.error('Error:', result.error);
+                        btnText.innerText = `Oops an error occurred.`;
+                        button.innerText = "Do it again"
+                        button.disabled = false
+                        return
+                    }
 
                     try {
                         const result = await speakText(response).then(() => {
