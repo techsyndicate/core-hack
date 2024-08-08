@@ -5,7 +5,7 @@ const User = require('../schemas/userSchema')
 
 router.get('/', ensureAuthenticated, async (req,res) => {
     const userdata=req.user
-    console.log(userdata)
+    // console.log(userdata)
     res.render('agency',{userdata:userdata})
 })
 
@@ -42,7 +42,7 @@ router.get('/cancel',ensureAuthenticated,(req, res) => {
 
 router.get('/success',ensureAuthenticated, (req, res) => {
     const userdata=req.user
-    console.log(userdata)
+    // console.log(userdata)
     res.render('success',{userdata:userdata})
 });
 

@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         userid: id
      })
      await newUser.save()
-     console.log(id)
+   //   console.log(id)
      res.redirect('/login')
 })
 

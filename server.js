@@ -16,7 +16,9 @@ const indexRouter = require('./routers/indexRouter'),
       regRouter = require('./routers/regRouter'),
       spaceguyRouter = require('./routers/spaceguyRouter'),
       aiRouter = require('./routers/aiRouter'),
-      agencyRouter = require('./routers/agencyRouter')
+      agencyRouter = require('./routers/agencyRouter'),
+      sosRouter = require('./routers/sosRouter');
+
 
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
@@ -41,6 +43,8 @@ app.use('/register', forwardAuthenticated, regRouter)
 app.use('/spaceguy', spaceguyRouter)
 app.use('/ai', aiRouter)
 app.use('/agency', agencyRouter)
+app.use('/sos', sosRouter)
+
 
 app.get('/logout', (req, res) => {
     req.logout((err) => {
