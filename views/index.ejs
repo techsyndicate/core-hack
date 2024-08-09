@@ -7,6 +7,24 @@
                 overflow-y: hidden;
                 overflow-x: hidden;
             }
+            /* .nav {
+                display: none;
+            } */
+            #main {
+                opacity: 0;
+                animation-name: fadeIn;
+                animation-delay: 3000ms;
+                animation-duration: 1000ms;
+                animation-fill-mode: forwards;
+                animation-iteration-count: 1;
+            }
+            #nav {
+                opacity: 0;
+                animation-name: fadeIn;
+                animation-duration: 1000ms;
+                animation-fill-mode: forwards;
+                animation-iteration-count: 1;
+            }
 
             .hero {
                 margin-top: 10vw;
@@ -28,10 +46,68 @@
                 bottom: -15vw;
                 z-index: -1;
             }
+            .loading {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100vw;
+                height: 100vh;
+            }
+            .loader, .loader::before, .loader::after {
+                border-radius: 50%;
+                background: linear-gradient(90deg, #fff calc(var(--i, .5) * 100%), #fd532f 0);
+            }
+
+            .loader {
+                display: grid;
+                width: 10vw;
+                height: 10vw;
+                animation: flip 2s steps(1) infinite;
+            }
+
+            .loader::before, .loader::after {
+                --i: 0;
+                grid-area: 1 / 1;
+                backface-visibility: hidden;
+                transform: rotateY(calc((var(--i) + 1) * .5turn));
+                animation: roty 1s ease-in-out infinite alternate;
+                content: '';
+            }
+
+            .loader::after {
+                --i: 1;
+            }
+
+            @keyframes flip {
+                50% {
+                    transform: scale(-1);
+                }
+            }
+
+            @keyframes roty {
+                0% {
+                    transform: rotateY(calc(var(--i) * .5turn));
+                }
+            }
+
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                } 100% {
+                    opacity: 1;
+                }
+            }
+
         </style>
+        <div class="loading" id="loader" style="display: none;">
+            <h1>Loading...</h1>
+            <div class="loader">
+            </div>
+        </div>
         <div id="main">
 
-            <model-viewer loading="eager" auto-rotate poster="poster_earth.jpg" src="earth_model.glb" shadow-intensity="1" alt="A 3D model of a shishkebab"></model-viewer>
+            <model-viewer auto-rotate id="model" loading="eager" poster="mars_cover.jpg" src="mars_model.glb" shadow-intensity="1" alt="A 3D model of a shishkebab"></model-viewer>
 
 
             <div class="hero">
@@ -51,3 +127,25 @@
                 </div>
             </div>
         </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loader = document.getElementById('loader')
+        const nav = document.getElementById('nav');
+        const main = document.getElementById('main');
+        const model = document.getElementById('model')
+
+        loader.style.display = 'flex';
+        model.style.visibility = 'hidden'
+        nav.style.display = 'none'
+
+        setTimeout(() => {
+            loader.style.display = 'none';
+            nav.style.display = 'flex';
+            main.style.display = 'flex';
+            model.style.visibility = 'visible';
+        }, 3000);
+    });
+
+</script>

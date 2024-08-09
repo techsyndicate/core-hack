@@ -1,8 +1,10 @@
 <html lang="en">
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
 <style>
     *{
         box-sizing: border-box;
+        cursor: none;
     }
     .nav{
         display: flex;
@@ -40,8 +42,41 @@
         border-radius: 10px;
         background: #545454;
     }
+    .cursor {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #fd532f;
+        mix-blend-mode: difference;
+        position: fixed;
+        z-index: 999;
+        pointer-events: none;
+        transition: opacity .4s;
+        top: -30px;
+        left: -30px;
+    }
+
+    .cursor-f {
+        position: fixed;
+        border-radius: 50%;
+        border: 1px dashed #fd532f;
+        width: 30px;
+        height: 30px;
+        pointer-events: none;
+        animation: spin 2.6s linear infinite paused;
+        transition: background-color .3s;
+    }
+
+    .cursor.clicked .cursor-f {
+        background-color: rgba(234, 227, 207, 0.12);
+    }
+
+    .cursor.hidden {
+        opacity: 0;
+    }
+
 </style>
-<nav class="nav">
+<nav class="nav" id="nav">
     <a href="/">
         <div class="logo">
             heeyyeyey
@@ -59,3 +94,78 @@
 </nav>    
 </body>
 </html>
+
+<script>
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor';
+    document.body.appendChild(cursor);
+
+    const cursorF = document.createElement('div');
+    cursorF.className = 'cursor-f';
+    cursor.appendChild(cursorF);
+
+    let cursorX = 0;
+    let cursorY = 0;
+    let pageX = 0;
+    let pageY = 0;
+
+    function lerp(start, end, amount) {
+    return (1 - amount) * start + amount * end;
+    }
+
+    if ('ontouchstart' in window) {
+    cursor.style.display = 'none';
+    cursorF.style.display = 'none';
+    }
+
+    document.addEventListener('mouseleave', () => cursor.classList.add('hidden'));
+    document.addEventListener('mouseenter', () => cursor.classList.remove('hidden'));
+
+    let clicked = false;
+    let startY, endY;
+
+    function mousedown(e) {
+    cursor.classList.add('clicked');
+    clicked = true;
+    startY = e.clientY || e.touches[0].clientY || e.targetTouches[0].clientY;
+    }
+
+    function mouseup(e) {
+    cursor.classList.remove('clicked');
+    endY = e.clientY || endY;
+    if (clicked && startY && Math.abs(startY - endY) >= 40) {
+        go(signToDir[Math.sign(startY - endY)]);
+        clicked = false;
+        startY = null;
+        endY = null;
+    }
+    }
+
+    window.addEventListener('mousedown', mousedown, false);
+    window.addEventListener('touchstart', mousedown, false);
+    window.addEventListener('touchmove', e => {
+    if (clicked) {
+        endY = e.touches[0].clientY || e.targetTouches[0].clientY;
+    }
+    }, false);
+    window.addEventListener('touchend', mouseup, false);
+    window.addEventListener('mouseup', mouseup, false);
+
+    window.addEventListener('mousemove', e => {
+    pageX = e.clientX;
+    pageY = e.clientY;
+    gsap.to(cursor, { duration: .01, left: e.clientX - 4, top: e.clientY - 4 });
+    });
+
+    function loop() {
+    if (cursorX !== pageX || cursorY !== pageY) {
+        cursorX = lerp(cursorX, pageX, .2);
+        cursorY = lerp(cursorY, pageY, .2);
+        gsap.to(cursorF, { duration: .01, left: cursorX - 15, top: cursorY - 15 });
+    }
+    requestAnimationFrame(loop);
+    }
+
+    loop();
+
+</script>
