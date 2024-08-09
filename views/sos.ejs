@@ -1,12 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOS</title>
-</head>
-<body>
-<button id="mainSos">SOS</button>
-</body>
 
+<head>
+    <%- include('bg')%>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/1626222186.js" crossorigin="anonymous"></script>
+        <title>SOS</title>
+        <style>
+            body {
+                /* display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;*/
+                margin: 0;
+
+            }
+
+            p {
+                line-height: 0;
+            }
+
+            #mainSos{
+                background-color: #FD532f;
+                padding: 1vw;
+                color: white;
+                font-size: 1vw;
+                border:none;
+                border-radius: 1vw;
+                margin: 5vw;
+            }
+            .trackSos {
+                width: 75vw;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(1.6px);
+-webkit-backdrop-filter: blur(1.6px);
+border: 1px solid rgba(255, 255, 255, 0.34);
+            }
+
+            .track {
+                display: block;
+                font-size: 2em;
+                margin-block-start: 0.67em;
+                margin-block-end: 0.67em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                font-weight: bold;
+                unicode-bidi: isolate;
+                color: #fd532f;
+                padding: 2vw;
+            }
+
+            .trackChart {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap:10vh;
+                margin-top: -21vh;
+                margin-bottom: 9vh;
+            }
+
+            .trackLine {
+                position: absolute;
+                left:21.4vw;
+                height: 35vh;
+                width: 3px;
+                z-index: -1;
+                /* Simulates border thickness */
+                background: repeating-linear-gradient(to bottom,
+                        #8f8f8f 0,
+                        #8f8f8f 3px,
+                        /* Dot size */
+                        transparent 1px,
+                        transparent 10px
+                        /* Spacing between dots */
+                    );
+            }
+
+            .fa-solid {
+                color: #a7a7a7;
+                font-size: 1.2vw;
+                margin-right: 1.3vw;
+                width: 1vw;
+            }
+            
+            .fa-check{
+                color: #111111;
+                font-size: 0.8vw;
+                width: auto;
+                margin-left: 1.25vw;
+                margin-top: 0.1vw;
+            }
+            .circle {
+                height: 2vh;
+                width: 2vh;
+                background: #FD532f;
+                border-radius: 100%;
+                margin-right: 1.8vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+            }
+
+            .trackBox {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                margin-left: 0;
+                /* gap: vh; */
+            }
+
+            .trackDesc{
+ display: flex;
+            flex-direction: column;
+            margin-right: 5vw;
+            width: 20vw;
+
+            }
+            .trackHead{
+                color:#8f8f8f;
+                margin-top: 0.5vh;
+            }
+
+            .details{
+                margin-left: 2vw;
+                font-size: 1.1vw;
+                /* display: flex; */
+                /* gap:1vh; */
+                /* flex-direction: column; */
+                /* margin-top: 0; */
+                /* padding: 0.5vw; */
+            }
+            .Stats{
+                font-size: 1.5vw;
+                margin: 2vw;
+            }
+
+            .trackTit{
+                font-size: 1.2vw;
+            }
+        </style>
+</head>
+
+<body>
+    <button id="mainSos">SOS</button>
+    <div class="trackSos">
+        <p class="track">Track SOS</p>
+        <div class="details">
+            <p class="date"></p>
+            <p>SOS ID A78BN2</p>
+        </div>
+        <br>
+        <div class="Stats">
+        <p class="speed"></p>
+            <p class="distance"></p>
+            <p class="eta"></p>
+        </div>
+        <div class="trackChart">
+            <div class="trackLine"></i></div>
+            <div class="trackBox">
+                <div class="circle"><i class="fa-solid fa-check"></i></div>
+                <i class="fa-solid fa-exclamation" ></i>
+                <div class="trackDesc">
+                    <p class="trackTit">SOS Received</p>
+                    <p class="trackHead">Spaceship will be launched soon</p>
+                </div>
+                <p>12:04</p>
+            </div>
+
+            <div class="trackBox">
+                <div class="circle"><i class="fa-solid fa-check"></i></div>
+                <i class="fa-solid fa-shuttle-space fa-rotate-270"></i>
+                <div class="trackDesc">
+                    <p class="trackTit">Spaceship Launched</p>
+                    <p class="trackHead">Spaceship is on your way</p>
+                </div>
+                <p>12:08</p>
+            </div>
+
+            <div class="trackBox">
+                <div class="circle"><i class="fa-solid fa-check"></i></div>
+
+                <i class="fa-solid fa-rocket fa-rotate-270"></i>
+                <div class="trackDesc">
+                    <p class="trackTit">Spaceship Reached</p>
+                    <p class="trackHead">SOS ID: A78BN2 has been closed</p>
+                </div>
+                <p>12:40</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function displayDateTime(){
+    const date = new Date();
+    var day = date.getDay();
+    var date_num = date.getDate();
+    var month = date.getMonth();
+    console.log(month)
+    switch (day){
+        case 0:day="Sun";break;
+        case 1:day="Mon";break;
+        case 2: day="Tue";break;
+        case 3: day="Wed";break;
+        case 4: day="Thu";break;
+        case 5: day="Fri";break;
+        case 6: day="Sat";break;
+
+    }
+    console.log(month)
+    switch (month){
+
+        case 0:month="Jan";break;
+        case 1:month="Feb";break;
+        case 2: month="Mar";break;
+        case 3: month="Apr";break;
+        case 4: month="May";break;
+        case 5: month="Jun";break;
+        case 6: month="Jul";break;
+        case 7: month="Aug";break;
+        case 8: month="Sep";break;
+        case 9: month="Oct";break;
+        case 10: month="Nov";break;
+        case 11: month="Dec";break;
+
+
+    }
+
+    console.log(month)
+    var datep = document.getElementsByClassName("date")[0]
+    datep.innerHTML = day + ", " + date_num.toString() + " " + month
+    // console.log(day)
+
+    var d = 8000;
+    var s = 16000;
+    var eta = (d / s)*60;
+
+    var dist = document.getElementsByClassName("distance")[0]
+    var speed = document.getElementsByClassName("speed")[0]
+    var time = document.getElementsByClassName("eta")[0]
+
+    speed.innerHTML = "Speed " + s +" km/h";
+    // datep.innerHTML = day + ", " + date_num.toString() + " " + month
+
+    setInterval(() => {
+        d-=1;
+        
+        
+        var ran = Math.floor(Math.random() * 4001) - 2000;
+
+        if (s + ran > 0){
+            s+=ran
+        }
+        eta = d *60/ s;
+        eta = eta.toFixed(2);
+        
+        dist.innerHTML = "Distance "+d + " km";
+        time.innerHTML="ETA " + eta + " mins";
+        speed.innerHTML = "Speed " + s +" km/h";
+
+    }, 100);
+}
+displayDateTime();
+</script>
 </html>
