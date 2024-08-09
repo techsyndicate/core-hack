@@ -2,152 +2,144 @@
 <body>
 </body>
 <button id="mainSos">SOS</button>
+<style>
+body {
+    /* display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;*/
+    margin: 0;
 
-<head>
-    <%- include('bg')%>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://kit.fontawesome.com/1626222186.js" crossorigin="anonymous"></script>
-        <title>SOS</title>
-        <style>
-            body {
-                /* display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;*/
-                margin: 0;
+}
 
-            }
+p {
+    line-height: 0;
+}
 
-            p {
-                line-height: 0;
-            }
-
-            #mainSos{
-                background-color: #FD532f;
-                padding: 1vw;
-                color: white;
-                font-size: 1vw;
-                border:none;
-                border-radius: 1vw;
-                margin: 5vw;
-            }
-            .trackSos {
-                width: 75vw;
+#mainSos{
+    background-color: #FD532f;
+    padding: 1vw;
+    color: white;
+    font-size: 1vw;
+    border:none;
+    border-radius: 1vw;
+    margin: 5vw;
+}
+.trackSos {
+    width: 75vw;
 background: rgba(255, 255, 255, 0.1);
 border-radius: 16px;
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(1.6px);
 -webkit-backdrop-filter: blur(1.6px);
 border: 1px solid rgba(255, 255, 255, 0.34);
-            }
+}
 
-            .track {
-                display: block;
-                font-size: 2em;
-                margin-block-start: 0.67em;
-                margin-block-end: 0.67em;
-                margin-inline-start: 0px;
-                margin-inline-end: 0px;
-                font-weight: bold;
-                unicode-bidi: isolate;
-                color: #fd532f;
-                padding: 2vw;
-            }
+.track {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    color: #fd532f;
+    padding: 2vw;
+}
 
-            .trackChart {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap:10vh;
-                margin-top: -21vh;
-                margin-bottom: 9vh;
-            }
+.trackChart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10vh;
+    margin-top: -21vh;
+    margin-bottom: 9vh;
+}
 
-            .trackLine {
-                position: absolute;
-                left:21.4vw;
-                height: 35vh;
-                width: 3px;
-                z-index: -1;
-                /* Simulates border thickness */
-                background: repeating-linear-gradient(to bottom,
-                        #8f8f8f 0,
-                        #8f8f8f 3px,
-                        /* Dot size */
-                        transparent 1px,
-                        transparent 10px
-                        /* Spacing between dots */
-                    );
-            }
+.trackLine {
+    position: absolute;
+    left:21.4vw;
+    height: 35vh;
+    width: 3px;
+    z-index: -1;
+    /* Simulates border thickness */
+    background: repeating-linear-gradient(to bottom,
+            #8f8f8f 0,
+            #8f8f8f 3px,
+            /* Dot size */
+            transparent 1px,
+            transparent 10px
+            /* Spacing between dots */
+        );
+}
 
-            .fa-solid {
-                color: #a7a7a7;
-                font-size: 1.2vw;
-                margin-right: 1.3vw;
-                width: 1vw;
-            }
-            
-            .fa-check{
-                color: #111111;
-                font-size: 0.8vw;
-                width: auto;
-                margin-left: 1.25vw;
-                margin-top: 0.1vw;
-            }
-            .circle {
-                height: 2vh;
-                width: 2vh;
-                background: #FD532f;
-                border-radius: 100%;
-                margin-right: 1.8vw;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: white;
-            }
+.fa-solid {
+    color: #a7a7a7;
+    font-size: 1.2vw;
+    margin-right: 1.3vw;
+    width: 1vw;
+}
 
-            .trackBox {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                margin-left: 0;
-                /* gap: vh; */
-            }
+.fa-check{
+    color: #111111;
+    font-size: 0.8vw;
+    width: auto;
+    margin-left: 1.25vw;
+    margin-top: 0.1vw;
+}
+.circle {
+    height: 2vh;
+    width: 2vh;
+    background: #FD532f;
+    border-radius: 100%;
+    margin-right: 1.8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
 
-            .trackDesc{
- display: flex;
-            flex-direction: column;
-            margin-right: 5vw;
-            width: 20vw;
+.trackBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0;
+    /* gap: vh; */
+}
 
-            }
-            .trackHead{
-                color:#8f8f8f;
-                margin-top: 0.5vh;
-            }
+.trackDesc{
+display: flex;
+flex-direction: column;
+margin-right: 5vw;
+width: 20vw;
 
-            .details{
-                margin-left: 2vw;
-                font-size: 1.1vw;
-                /* display: flex; */
-                /* gap:1vh; */
-                /* flex-direction: column; */
-                /* margin-top: 0; */
-                /* padding: 0.5vw; */
-            }
-            .Stats{
-                font-size: 1.5vw;
-                margin: 2vw;
-            }
+}
+.trackHead{
+    color:#8f8f8f;
+    margin-top: 0.5vh;
+}
 
-            .trackTit{
-                font-size: 1.2vw;
-            }
-        </style>
-</head>
+.details{
+    margin-left: 2vw;
+    font-size: 1.1vw;
+    /* display: flex; */
+    /* gap:1vh; */
+    /* flex-direction: column; */
+    /* margin-top: 0; */
+    /* padding: 0.5vw; */
+}
+.Stats{
+    font-size: 1.5vw;
+    margin: 2vw;
+}
+
+.trackTit{
+    font-size: 1.2vw;
+}
+</style>
 
 <body>
     <button id="mainSos">SOS</button>
