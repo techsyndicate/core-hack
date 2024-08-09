@@ -26,4 +26,14 @@ function ensurePlan(req, res, next) {
   } 
 }
 
-module.exports = { ensureAuthenticated, forwardAuthenticated, ensurePlan };
+function ensureNoPlan(req, res, next) {
+  console.log(req.user)
+  if (!req.user.hasPlan) {
+    return next();
+  }
+  else{
+    res.redirect('/spaceguy')
+  } 
+}
+
+module.exports = { ensureAuthenticated, forwardAuthenticated, ensurePlan, ensureNoPlan};

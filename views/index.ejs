@@ -1,11 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    Hello there 👋
-</body>
-</html>
+<% layout('layout') -%>
+<script src="https://unpkg.com/@google/model-viewer@1.10.1/dist/model-viewer.js" type="module"></script>
+<script nomodule="" src="https://unpkg.com/@google/model-viewer@1.10.1/dist/model-viewer-legacy.js"></script>
+    <%- include ./components/navLanding %>
+        <style>
+            * {
+                overflow-y: hidden;
+                overflow-x: hidden;
+            }
+
+            .hero {
+                margin-top: 10vw;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .hero-text {
+                font-size: 5vw;
+                width: 50%;
+                margin-left: 4vw;
+            }
+            
+            model-viewer {
+                width: 50vw;
+                height: 50vw;
+                position: absolute;
+                right: -5vw;
+                bottom: -15vw;
+                z-index: -1;
+            }
+        </style>
+        <div id="main">
+
+            <model-viewer loading="eager" auto-rotate poster="poster_earth.jpg" src="earth_model.glb" shadow-intensity="1" alt="A 3D model of a shishkebab"></model-viewer>
+
+
+            <div class="hero">
+                <div class="hero-text">
+                    Welcome to Your One-Stop Destination for All Your Space needs!
+                </div>
+                <div class="features">
+                    <!-- TODO:replace later with features -->
+                    <a href="/register">/register</a> <br>
+                    <a href="/login">/login</a> <br>
+                    <a href="/spaceguy">/spaceguy</a> <br>
+                    <a href="/agency">/agency</a> <br>
+                    <a href="/spaceguy/code">/spaceguy/code</a> <br>
+                    <a href="/spaceguy/clean">/spaceguy/clean</a> <br>
+                    <a href="/spaceguy/health">/spaceguy/health</a> <br>
+                    <a href="/spaceguy/food">/spaceguy/food</a>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,61 @@
+<html lang="en">
+<body>
+<style>
+    *{
+        box-sizing: border-box;
+    }
+    .nav{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        height: 15vh;
+        font-size: 1.2vw;
+        padding: 0 2vw 0 2vw;
+        /* gap: 20vw; */
+        border-bottom: #545454 1px solid;
+    }
+    /* .logo{
+        margin-left: 2vw;
+    } */
+    .mid-part{
+        display: flex;
+        gap: 2.5vw;
+        /* margin-right: 2vw; */
+    }
+    .btn{
+        transition: 0.3s;
+    }
+    .btn:hover{
+        color: #fd532f;
+    }
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #000;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: #545454;
+    }
+</style>
+<nav class="nav">
+    <a href="/">
+        <div class="logo">
+            heeyyeyey
+        </div>
+    </a>
+    
+    <div class="mid-part">
+        <a class="btn" href="/">Home</a>
+        <a class="btn" href="/spaceguy">For Spaceguys</a>
+        <a class="btn" href="/agency">For Agencies</a>
+        <a class="btn" href="/ai">Companion</a>
+        <a class="btn" href="/login">Login</a>
+        <a class="btn" href="/register">Register</a>
+    </div>
+</nav>    
+</body>
+</html>

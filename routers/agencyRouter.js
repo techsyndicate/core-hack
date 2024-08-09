@@ -1,15 +1,14 @@
 const router = require('express').Router()
-const {ensureAuthenticated} = require('../utils/authenticate.js')
+const {ensureAuthenticated, ensureNoPlan} = require('../utils/authenticate.js')
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 const User = require('../schemas/userSchema')
 
 router.get('/', ensureAuthenticated, async (req,res) => {
     const userdata=req.user
-    // console.log(userdata)
     res.render('agency',{userdata:userdata})
 })
 
-router.post('/buy', ensureAuthenticated, async (req, res) => {
+router.post('/buy', ensureAuthenticated, ensureNoPlan, async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: [{

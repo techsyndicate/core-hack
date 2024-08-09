@@ -1,50 +1,136 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI</title>
-</head>
+<% layout('layout') -%>
+<%- include ./components/navLanding %>
+
+<style>
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 4vw;
+    padding: 0 20vw;
+}
+#button{
+    color: #111;
+    background-color: #fd532f;
+    padding: 1vmin 1.5vmin;
+    border-radius: 10px;
+    font-size: 2vh;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    width: 15vw;
+}
+#status{
+    color:#fd532f;
+}
+.sochashit {
+    background: #2a2a2a;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5vw;
+    padding: 1vw;
+    border-radius: 5px;
+}
+.sochashit > p {
+    margin: 0;
+}
+#skeleton-loader, #skeleton-loader-2 , #skeleton-loader-3 {
+    width: 80%;
+    height: 20px;
+    background: #4d4d4d;
+    animation: skeleton-loading 1s infinite alternate;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+@keyframes skeleton-loading {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+
+</style>
 <body>
-    <h1 id="status">Jarvis is currently sleeping 😪</h1>
-    <p id="btnText">Press button to wake up Jarvis</p>
-    <p id="thinking" style="display: none;">Jarvis is thinking... </p>
-    <button id="button">Wake Jarvis</button>
+    <div class="main">
+        <h1 class="status">Shambhu is <span id="status">currently sleeping 😪</span></h1>
+        <p id="btnText">Press button to wake up Shambhu</p>
+        <div class="sochashit" style="display: none;" id="rishit">
+            <p id="sochaHua" style="display: none;"></p>
+            <div class="loaders" id="loaders">
+                <div id="skeleton-loader"></div>
+                <div style="width: 50%;" id="skeleton-loader-2"></div>
+                <div style="width: 70%; margin-bottom: 0;" id="skeleton-loader-3"></div>
+            </div>
+        </div>
+        <button id="button">Wake Shambhu</button>
+    </div>
 </body>
 <script>
     const status = document.getElementById('status')
     const btnText = document.getElementById('btnText')
     const button = document.getElementById('button')
-    const thinking = document.getElementById('thinking')
+    const rishit = document.getElementById('rishit')
+    const sochaHua = document.getElementById('sochaHua')
+    const loaders = document.getElementById('loaders')
 
+    console.log(sochaHua)
+    
     button.addEventListener('click', async (e) => {
         button.disabled = true
         event.preventDefault()
 
         console.log('button pressed')
-        status.innerText = "Jarvis is now awake 🙂"
-        btnText.innerText = "Jarvis is LISTENING"
+        status.innerText = " now awake 🙂"
+        btnText.innerText = "Shambhu is LISTENING"
+        rishit.style.display = "block"
 
         var userSpeech = ''
         try {
             const result = await startSpeechRecognition();
             console.log(result.length)
             if (!result) {
-                return btnText.innerText = `Oops! Jarvis couldn't hear you.`;
+                return btnText.innerText = `Oops! Shambhu couldn't hear you.`;
             }
             userSpeech = result
             btnText.innerText = `You said: ${result}`;
-            thinking.style.display = "block"
 
             try {
-                googleKoMaro(userSpeech).then(async response => { // YAHA PE USER SPEACH KI JAGAH TRAINING DATA LIKHDENA SEE SYNAPSE CODE TECHSYNDICATE REPO
+                console.log(result)
+                googleKoMaro("You are Shambhu, a virtual AI Companion, who helps an astronaut in maintaining their mental health. Respond to them for whatever they ask for. Here's what they are saying:" + result +"You act like a friend to them. You support them in their tough times. Talk to them as if you're their very own. Also, here's their information: Fname: <%= user.fname %> Lname: <%= user.fname %>. Provide a response in less than 75 words.").then(async response => { // YAHA PE USER SPEACH KI JAGAH TRAINING DATA LIKHDENA SEE SYNAPSE CODE TECHSYNDICATE REPO
                     console.log(response)
                     if (response.length > 500) {
                         response = response.slice(0, 70)
-                        btnText.innerText = response + "..."
+                        sochaHua.innerText = response + "..."
                     }
-                    thinking.style.display = "none"
-                    btnText.innerText = response
+                    loaders.style.display = "none"
+                    sochaHua.style.display = "block"
+                    sochaHua.innerText = response
+                    encodedResponse = response.replace("'", "%27")
+                    encodedResponse = encodedResponse.replace('"', "%22")
+
+                    // console.log("1", encodedResponse, userSpeech)
+                    const response2 = await fetch('/ai/storeChat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "response": encodedResponse, "query": userSpeech})
+                    });
+
+                    const result = await response2.json();
+
+                    if (result.success) {
+                        console.log(result.message);
+                    } else {
+                        console.error('Error:', result.error);
+                        sochaHua.style.display = "block"
+                        sochaHua.innerText = `Oops an error occurred.`;
+                        button.innerText = "Do it again"
+                        button.disabled = false
+                        return
+                    }
 
                     try {
                         const result = await speakText(response).then(() => {
@@ -53,37 +139,57 @@
                         })
                     } catch (error) {
                         console.error(error);
-                        btnText.innerText = `Oops an error occurred.`;
+                        sochaHua.style.display = "block"
+                        sochaHua.innerText = `Oops an error occurred.`;
                         button.innerText = "Do it again"
                         button.disabled = false
                     }
                 })
             } catch {
-                btnText.innerText = `Oops an error occurred.`;
+                sochaHua.style.display = "block"
+                sochaHua.innerText = `Oops an error occurred.`;
                 button.innerText = "Do it again"
                 button.disabled = false
             }
         } catch {
             console.log('dadas')
-            btnText.innerText = `Oops an error occurred.`;
+            sochaHua.style.display = "block"
+            sochaHua.innerText = `Oops an error occurred.`;
             button.innerText = "Do it again"
             button.disabled = false
         }
 
     })
 
-    function speakText(text) {
-            return new Promise((resolve, reject) => {
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.onend = () => resolve('Speech synthesis finished.');
-                    utterance.onerror = (event) => reject(`Error occurred in synthesis: ${event.error}`);
-                    window.speechSynthesis.speak(utterance);
-                } else {
-                    reject('Browser does not support the Web Speech API');
-                }
+    async function speakText(text) {
+            const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/IKne3meq5aSn9XLyUdCD', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'xi-api-key': 'sk_3dc79a1715fe01a3db4fdc00fa6304cedcb10238e7eee5e8' // Replace with your Eleven Labs API key
+                },
+                body: JSON.stringify({
+                    text: text,
+                    model_id: 'eleven_monolingual_v1',
+                    voice_settings: {
+                        stability: 0.5,
+                        similarity_boost: 0.5
+                    }
+                })
             });
+
+            if (!response.ok) {
+                console.error('Error:', response.statusText);
+                return;
+            }
+
+            const blob = await response.blob();
+            const audioUrl = URL.createObjectURL(blob);
+            const audio = new Audio(audioUrl);
+            audio.play();
         }
+
+
 
     function startSpeechRecognition() {
         return new Promise((resolve, reject) => {
@@ -154,3 +260,5 @@
 
 </script>
 </html>
+
+<!-- sk_3dc79a1715fe01a3db4fdc00fa6304cedcb10238e7eee5e8 -->

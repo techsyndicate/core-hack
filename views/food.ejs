@@ -1,0 +1,260 @@
+<% layout('layout') -%>
+<%- include ./components/navLanding %>
+    <style>
+        body {
+            font-family: 'Space Grotesk';
+            background-color: #111;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1,
+        h2 {
+            color: #fd532f;
+            text-align: center;
+        }
+
+        .inventory,
+        .meal-plan {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #111;
+        }
+
+        th {
+            background-color: #111;
+        }
+
+        .add-item {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input,
+        button,
+        select {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        input,
+        select {
+            width: 22%;
+            background-color: #111;
+            color: #e0e0e0;
+        }
+
+        button {
+            background-color: #fd532f;
+            color: #0a0a1a;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #fd532f;
+        }
+
+        .meal-plan {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #main {
+            background-color: #111;
+            width: 70vw;
+            border: 1px solid #545454;
+            border-radius: 15px;
+            padding: 2vmin;
+            margin-top: 10vh;
+            margin-bottom: 2vw;
+        }
+    </style>
+        <div id="main">
+            <nav><a href="/spaceguy">&#9664; Back to dashboard</a></nav>
+
+            <h1>Inventory and Meal Planning</h1>
+
+            <div class="inventory">
+                <h2>Food Inventory</h2>
+                <table id="inventoryTable">
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Calories</th>
+                        <th>Category</th>
+                    </tr>
+                </table>
+                <div class="add-item">
+                    <input type="text" id="newItem" placeholder="Item name">
+                    <input type="number" id="newQuantity" placeholder="Quantity">
+                    <input type="number" id="newCalories" placeholder="Calories">
+                    <select id="newCategory">
+                        <option value="protein">Protein</option>
+                        <option value="carb">Carbohydrate</option>
+                        <option value="vegetable">Vegetable</option>
+                        <option value="fruit">Fruit</option>
+                        <option value="dairy">Dairy</option>
+                        <option value="beverage">Beverage</option>
+                    </select>
+                    <button onclick="addItem()">Add Item</button>
+                </div>
+            </div>
+
+            <div class="meal-plan">
+                <h2>Daily Meal Plan</h2>
+                <p>Target Calories: <span id="targetCalories">2500</span></p>
+                <div id="mealPlan"></div>
+                <button onclick="generateMealPlan()">Generate Balanced Meal Plan</button>
+            </div>
+        </div>
+
+        <script>
+            let inventory = [
+                { name: "Beef Stew (Thermostabilized)", quantity: 20, calories: 300, category: "protein" },
+                { name: "Chicken Fajitas", quantity: 15, calories: 250, category: "protein" },
+                { name: "Scrambled Eggs", quantity: 25, calories: 180, category: "protein" },
+                { name: "Macaroni and Cheese", quantity: 20, calories: 320, category: "carb" },
+                { name: "Rice Pilaf", quantity: 30, calories: 200, category: "carb" },
+                { name: "Wheat Tortillas", quantity: 40, calories: 120, category: "carb" },
+                { name: "Broccoli Au Gratin", quantity: 25, calories: 80, category: "vegetable" },
+                { name: "Green Beans and Mushrooms", quantity: 30, calories: 60, category: "vegetable" },
+                { name: "Fruit Cocktail", quantity: 35, calories: 100, category: "fruit" },
+                { name: "Dried Apricots", quantity: 40, calories: 80, category: "fruit" },
+                { name: "Chocolate Pudding", quantity: 20, calories: 150, category: "dairy" },
+                { name: "Powdered Milk", quantity: 50, calories: 80, category: "dairy" },
+                { name: "Orange-Mango Drink", quantity: 40, calories: 50, category: "beverage" },
+                { name: "Coffee (no sugar)", quantity: 100, calories: 50, category: "beverage" }
+            ];
+
+            function updateInventoryTable() {
+                const table = document.getElementById("inventoryTable");
+                table.innerHTML = `
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Calories</th>
+            <th>Category</th>
+        </tr>
+        `;
+                inventory.forEach(item => {
+                    const row = table.insertRow();
+                    row.insertCell(0).textContent = item.name;
+                    row.insertCell(1).textContent = item.quantity;
+                    row.insertCell(2).textContent = item.calories;
+                    row.insertCell(3).textContent = item.category;
+                });
+            }
+
+            function addItem() {
+                const name = document.getElementById("newItem").value;
+                const quantity = parseInt(document.getElementById("newQuantity").value);
+                const calories = parseInt(document.getElementById("newCalories").value);
+                const category = document.getElementById("newCategory").value;
+
+                if (name && quantity && calories && category) {
+                    inventory.push({ name, quantity, calories, category });
+                    updateInventoryTable();
+                    document.getElementById("newItem").value = "";
+                    document.getElementById("newQuantity").value = "";
+                    document.getElementById("newCalories").value = "";
+                    document.getElementById("newCategory").value = "protein";
+                }
+            }
+
+            function generateMealPlan() {
+                const targetCalories = parseInt(document.getElementById("targetCalories").textContent);
+                let remainingCalories = targetCalories;
+                const meals = {
+                    breakfast: [],
+                    lunch: [],
+                    dinner: [],
+                    snacks: []
+                };
+
+                const mealDistribution = {
+                    breakfast: 0.25,
+                    lunch: 0.3,
+                    dinner: 0.3,
+                    snacks: 0.15
+                };
+
+                for (const [meal, percentage] of Object.entries(mealDistribution)) {
+                    let mealCalories = targetCalories * percentage;
+
+                    // Ensure we have one item from each main category for main meals
+                    if (meal !== 'snacks') {
+                        ['protein', 'carb', 'vegetable'].forEach(category => {
+                            const item = inventory.find(i => i.category === category && i.quantity > 0);
+                            if (item) {
+                                meals[meal].push({ name: item.name, servings: 1 });
+                                mealCalories -= item.calories;
+                                item.quantity--;
+                            }
+                        });
+                    }
+
+                    // Fill the rest of the meal
+                    while (mealCalories > 0 && inventory.some(item => item.quantity > 0)) {
+                        const availableItems = inventory.filter(item => item.quantity > 0 && item.calories <= mealCalories);
+                        if (availableItems.length === 0) break;
+
+                        const selectedItem = availableItems[Math.floor(Math.random() * availableItems.length)];
+                        const existingMeal = meals[meal].find(m => m.name === selectedItem.name);
+
+                        if (existingMeal) {
+                            existingMeal.servings++;
+                        } else {
+                            meals[meal].push({ name: selectedItem.name, servings: 1 });
+                        }
+
+                        mealCalories -= selectedItem.calories;
+                        selectedItem.quantity--;
+                        remainingCalories -= selectedItem.calories;
+                    }
+                }
+
+                const mealPlanDiv = document.getElementById("mealPlan");
+                mealPlanDiv.innerHTML = `
+        <h3>Today's Balanced Meal Plan:</h3>
+        ${Object.entries(meals).map(([mealName, mealItems]) => `
+            <h4>${mealName.charAt(0).toUpperCase() + mealName.slice(1)}:</h4>
+            <ul>
+            ${mealItems.map(item => `<li>${item.servings} serving(s) of ${item.name}</li>`).join("")}
+            </ul>
+        `).join("")}
+        <p>Total Calories: 2500</p>
+        `;
+
+                updateInventoryTable();
+            }
+
+            // Initialize
+            updateInventoryTable();
+        </script>
