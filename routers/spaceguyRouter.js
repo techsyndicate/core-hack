@@ -1,4 +1,4 @@
-const { ensurePlan, ensureAuthenticated } = require('../utils/authenticate')
+const { ensurePlan, ensureAuthenticated, ensureNoPlan } = require('../utils/authenticate')
 const User = require('../schemas/userSchema')
 
 const router = require('express').Router()
@@ -12,7 +12,7 @@ router.get('/tracker',ensureAuthenticated, ensurePlan, async (req, res) => {
     res.render('tracker', {title: "Tracker"})
 })
 
-router.get('/code', ensureAuthenticated,(req, res) => {
+router.get('/code', ensureAuthenticated, ensureNoPlan, (req, res) => {
     res.render('spaceguyLogin', {title: "Tracker"})
 })
 
@@ -57,5 +57,9 @@ router.get('/friend', ensureAuthenticated, ensurePlan, async (req,res) => {
 
 router.get('/food', ensureAuthenticated, ensurePlan, async (req, res) => {
     res.render('food')
+})
+
+router.get('/sos', async (req,res) => {
+    res.render('sos')
 })
 module.exports = router

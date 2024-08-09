@@ -1,9 +1,34 @@
 <% layout('layout') -%>
+<style>
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15%;
+}
+#button{
+    color: #111;
+    background-color: #fd532f;
+    padding: 1vmin 1.5vmin;
+    border-radius: 10px;
+    font-size: 2vh;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+#status{
+    color:#fd532f;
+}
+</style>
 <body>
-    <h1 id="status">Shambhu is currently sleeping 😪</h1>
-    <p id="btnText">Press button to wake up Shambhu</p>
-    <p id="thinking" style="display: none;">Shambhu is thinking... </p>
-    <button id="button">Wake Shambhu</button>
+    <nav><a href="/spaceguy">&#9664; Back to dashboard</a></nav>
+    <div class="main">
+        <h1 class="status">Shambhu is <span id="status">currently sleeping 😪</span></h1>
+        <p id="btnText">Press button to wake up Shambhu</p>
+        <p id="thinking" style="display: none;">Shambhu is thinking... </p>
+        <button id="button">Wake Shambhu</button>
+    </div>
 </body>
 <script>
     const status = document.getElementById('status')
