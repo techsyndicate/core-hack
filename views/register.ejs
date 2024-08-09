@@ -1,83 +1,103 @@
 <% layout('layout') -%>
 <%- include ./components/navLanding %>
-    <style>
-        body{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        #main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
-            border-radius: 20px;
-            border: 1px solid #545454;
-            margin-top: 10vh;
-            width: 60vh;
-            padding: 1vmin;
-            
-        }
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+    }
+    #main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         
-        #main form {
-            width: 100%;
-            margin: 3vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 1vmin;
-        }
+        width: 100vw;
+        height: 105vh;
 
-        form input {
-            background-color: transparent;
-            padding: 10px;
-            border: 1px solid #545454;
-            font-size: 1.1em;
-            border-radius: 10px;
-            width: 80%;
-            margin: 1vmin 0;
-        }
+        border-radius: 20px;
+        /* margin-top: 10vh; */
+        padding: 1vmin;
 
-        form label {
-            font-size: 1.1em;
-        }
-
-        form button {
-            color: #111;
-            background-color: #fd532f;
-            padding: 1.5vmin 2vmin;
-            border-radius: 10px;
-            font-size: 3vh;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-        } 
         
-        p {
-            color: #818080;
-            text-align: center;
-            width: 70%;
-        }
+    }
+    
+    #main form {
+        /* width: 30vw; */
+        min-width: 35vw;
+        margin: 3vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1vmin;
+        border: 1px solid #545454;
+        padding: 3vh;
+        border-radius: 5px;
+    }
 
-        h1 {
-            color: #fd532f;
-        }
-    </style>
+    form input {
+        background-color: transparent;
+        padding: 10px;
+        border: 1px solid #545454;
+        font-size: 1.1em;
+        border-radius: 5px;
+        width: 80%;
+        margin: 2vmin 0;
+    }
+
+    form label {
+        font-size: 1.1em;
+    }
+
+    form button {
+        color: #111;
+        background-color: #fd532f;
+        padding: 1.5vmin 2vmin;
+        border-radius: 5px;
+        font-size: 3vh;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+    } 
+    
+    p {
+        color: #818080;
+        text-align: center;
+        width: 70%;
+    }
+
+    h1 {
+        color: #fd532f;
+    }
+</style>
 <body>
     <div id="main">
 
-        <h1>Register</h1>
         <form action="/register" method="post">
+            <h1>Register</h1>
             <input type="text" required name="fname" placeholder="First Name">
             <input type="text" required name="lname" placeholder="Last Name">
             <input type="email" required name="email" placeholder="Email">
             <input type="password" required name="password" placeholder="Password">
             <input type="password" required name="cnfpassword" placeholder="Confirm Password">
             <button type="submit">Submit</button>
+            <p>Already have an account? <a href="/login">Login.</a></p>
         </form>
     </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script>
+    const error = document.getElementById("error")
+    
+    if (error) {   
+        var notyf = new Notyf();
+
+        notyf.error(error.innerText);
+    }
+</script>
