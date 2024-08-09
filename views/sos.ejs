@@ -232,7 +232,7 @@ width: 20vw;
     // console.log(day)
 
     var d = 8000;
-    var s = 16000;
+    var s = 25000;
     var eta = (d / s)*60;
 
     var dist = document.getElementsByClassName("distance")[0]
@@ -248,9 +248,10 @@ width: 20vw;
         
         var ran = Math.floor(Math.random() * 4001) - 2000;
 
-        if (s + ran > 0){
+        if (s + ran > 16000 && s + ran < 35000){
             s+=ran
         }
+
         eta = d *60/ s;
         eta = eta.toFixed(2);
         
