@@ -98,7 +98,7 @@
 
             try {
                 console.log(result)
-                googleKoMaro("DONT USE CONTRACTED FORMS THIS IS A FORMAL CONVERSATION LIKE dont use isnt instead use is not. You are Shambhu, a virtual AI Companion, who helps an astronaut in maintaining their mental health. Here's what they are saying:" + result +"You act like a friend to them. You support them in their tough times. Talk to them as if you're their very own. VERY IMPORTANT: WHEREVER THERE IS A SPECIAL CHARACTER, REPLACE IT BY THEIR URL ENCODED FORM. Also, here's their information: Fname: <%= user.fname %> Lname: <%= user.fname %>. Provide a response in less than 75 words.").then(async response => { // YAHA PE USER SPEACH KI JAGAH TRAINING DATA LIKHDENA SEE SYNAPSE CODE TECHSYNDICATE REPO
+                googleKoMaro("You are Shambhu, a virtual AI Companion, who helps an astronaut in maintaining their mental health. Respond to them for whatever they ask for. Here's what they are saying:" + result +"You act like a friend to them. You support them in their tough times. Talk to them as if you're their very own. Also, here's their information: Fname: <%= user.fname %> Lname: <%= user.fname %>. Provide a response in less than 75 words.").then(async response => { // YAHA PE USER SPEACH KI JAGAH TRAINING DATA LIKHDENA SEE SYNAPSE CODE TECHSYNDICATE REPO
                     console.log(response)
                     if (response.length > 500) {
                         response = response.slice(0, 70)
