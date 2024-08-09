@@ -43,10 +43,10 @@ mongoose.connect(process.env.MONGO_URI, console.log('MONGODB CONNECTED'))
 app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, regRouter)
-app.use('/spaceguy', spaceguyRouter)
+app.use('/spaceguy', ensureAuthenticated, spaceguyRouter)
 app.use('/ai', ensureAuthenticated, aiRouter)
-app.use('/agency', agencyRouter)
-app.use('/sos', sosRouter)
+app.use('/agency', ensureAuthenticated, agencyRouter)
+app.use('/sos', ensureAuthenticated, sosRouter)
 
 
 app.get('/logout', (req, res) => {
