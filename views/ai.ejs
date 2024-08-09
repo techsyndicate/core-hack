@@ -115,7 +115,7 @@ body {
                     encodedResponse = encodedResponse.replace('"', "%22")
 
                     // console.log("1", encodedResponse, userSpeech)
-                    const response2 = await fetch('/ai/storeChat', {
+                    const response2 = await fetch('/spaceguy/ai/storeChat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
