@@ -33,9 +33,9 @@ router.post('/code', async (req,res) => {
     
 })
 
-router.post('/emergency', ensureAuthenticated, ensurePlan, (req,res)=>{
-res.send('woah bbg you in troubleeee')
-})
+// router.post('/emergency', ensureAuthenticated, ensurePlan, (req,res)=>{
+// res.send('woah bbg you in troubleeee')
+// })
 
 router.get('/clean', ensureAuthenticated, ensurePlan, (req,res)=>{
     res.render('junk')
@@ -43,7 +43,7 @@ router.get('/clean', ensureAuthenticated, ensurePlan, (req,res)=>{
 
 router.post('/clean', ensureAuthenticated, ensurePlan, (req, res)=>{
     console.log(req.body.junklist)
-    res.redirect('/')
+    res.redirect('/spaceguy')
 })
 
 
@@ -51,9 +51,9 @@ router.get('/health', ensureAuthenticated, ensurePlan, (req, res)=>{
     res.render('health')
 })
 
-router.get('/friend', ensureAuthenticated, ensurePlan, async (req,res) => {
-    res.render('ai')
-})
+// router.get('/friend', ensureAuthenticated, ensurePlan, async (req,res) => {
+//     res.render('ai')
+// })
 
 router.get('/food', ensureAuthenticated, ensurePlan, async (req, res) => {
     res.render('food')

@@ -1,106 +1,162 @@
 <% layout('layout') -%>
-<%- include ./components/navLanding %>
+    <%- include ./components/navLanding %>
 
-    <style>
-        button {
-            padding: 1.5vmin 2vmin;
-            border-radius: 10px;
-            background-color: #fd532f;
-            color: black;
-            font-size: 3vh;
-        }
+        <style>
+            button {
+                padding: 1.5vmin 2vmin;
+                border-radius: 10px;
+                background-color: #fd532f;
+                color: black;
+                font-size: 3vh;
+            }
 
-        #buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1vh;
-        }
+            #buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1vh;
+            }
 
-        .button {
-            text-decoration: none;
-            color: #fff;
-        }
+            .button {
+                text-decoration: none;
+                color: #fff;
+            }
 
-        #sosButton {
-            width: 13vh;
-            height: 13vh;
-            border-radius: 50%;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.8em;
-            position: fixed;
-            bottom: 2vh;
-            right: 2vh;
-        }
+            button {
+                cursor: pointer;
+                outline: none;
+                border: none;
+            }
 
-        #main {
-            padding: 2vmin;
-            margin-top: 10vh;
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+            #sosButton {
+                width: 13vh;
+                height: 13vh;
+                border-radius: 50%;
+                border: none;
+                font-weight: bold;
+                cursor: pointer;
+                font-size: 1.8em;
+                position: fixed;
+                bottom: 2vh;
+                right: 2vh;
+            }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+            #main {
+                padding: 2vmin;
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .dash-card-1 {
-            width: 18vw;
-            height: fit-content;
-            padding: 2vh;
-            border-radius: 10px;
-            background-color: #111;
-            margin: 1vh;
-        }
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
 
-        #cards {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: start;
-            align-items: start;
-        }
-    </style>
+            .dash-card-1 {
+                height: fit-content;
+                border-radius: 10px;
+                background-color: #111;
+            }
 
-    <body>
-        <div id="main">
-            <h1>Hi, <span style="color: #fd532f;">
-                    <%= user.fname +' '+ user.lname %></span></h1>
+            #cards {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: start;
+                gap: 5vh;
+                margin: 10vh;
+            }
+
+            #deets {
+                display: flex;
+                flex-direction: row;
+                gap: 10vmin;
+                justify-content: center;
+                padding: 5vmin;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(1.6px);
+                -webkit-backdrop-filter: blur(1.6px);
+                border: 1px solid rgba(255, 255, 255, 0.34);
+            }
+
+            #mission {
+                width: 20vw;
+            }
+
+            #vessel {
+                width: 30vw;
+            }
+
+            .outlined {
+                background-color: #111;
+                border: 3px solid #fd532f;
+                color: #fd532f;
+                box-shadow: 0 4px 30px #fd532f33;
+                transition-duration: 300ms;
+                width: 15vw;
+            }
+
+            .outlined:hover {
+                transform: translateY(-10px);
+            }
+        </style>
+
+        <body>
+            <div id="main">
+                <h1>Hi, <span style="color: #fd532f;">
+                        <%= user.fname +' '+ user.lname %></span></h1>
             <!-- <a class="button" href="/spaceguy/clean">Start Junk Cleaning</a>
             <a class="button" href="/spaceguy/tracker">Track my location</a>
             <a class="button" href="/spaceguy/food">Get food routine</a>
             <a class="button" href="/spaceguy/health">View Health Stats</a>
             <a class="button" href="/ai">Talk to JARVIS</a> -->
-            <div id="cards">
-
-            <div id="mission" class="dash-card-1">
-                <h2>Mission Details</h2>
-                <p>Information not yet provided by agency. Please contact your agent and ask for a description of the mission.</p>
-            </div>
-
-                <div class="dash-card-1" id="vessel">
-                    <h2>Vessel Information</h2>
-                <p><span style="font-weight: bold;">Vessel Name: Stellar Harvester</span> <br>
-                    A deep-space vessel equipped with robotic arms and AI, designed for debris collection and recycling. Converts space junk into usable materials, supporting mission sustainability and safety.</p>
-                    <a href="" style="color: #fd532f; cursor: pointer;" >View Inventory &#8594;</a>
+            
+            <div id="deets">
+                
+                <div id="mission">
+                    <h2 style="color: #fd532f; ">Mission Details</h2>
+                    <p>Information not yet provided by agency. Please contact your agent and ask for a description of the mission.</p>
                 </div>
                 
-                <div id="communication" class="dash-card-1">
-                    <h2>Talk to your agency</h2>
+                <div id="vessel">
+                    <h2 style="color: #fd532f; ">Vessel Information</h2>
+                    <p><span style="font-weight: bold;">Vessel Name: Stellar Harvester</span> <br>
+                        A deep-space vessel equipped with robotic arms and AI, designed for debris collection and recycling. Converts space junk into usable materials, supporting mission sustainability and safety.</p>
+                        <!-- <a href="" style="color: #fd532f; cursor: pointer;" >View Inventory &#8594;</a> -->
+                    </div>
                 </div>
-                <div id="clean" class="dash-card-1">
+                <div id="cards">
+                
+                <!-- <div id="communication" class="dash-card-1">
+                    <h2>Talk to your agency</h2>
+                </div> -->
+                <!-- <div id="clean" class="dash-card-1">
                 <h2>Clean Space Debris</h2>
+                <p>Activate collection drones</p>
                 <a href="/spaceguy/clean" style="color: #fd532f; cursor: pointer;" >Get Started &#8594;</a>
+            </div> -->
+            <div class="dash-card-1">
+                <a href="/spaceguy/clean"><button class="outlined">Clean Space Debris</button></a>
             </div>
+            <div class="dash-card-1">
+                <a href="/spaceguy/food"><button class="outlined">View Food Inventory</button></a>
+            </div>
+            <div class="dash-card-1">
+                <a href="/spaceguy/health"><button class="outlined">View Health Statistics</button></a>
+            </div>
+            <div class="dash-card-1">
+                <a href="/spaceguy/ai"><button class="outlined">Talk to AI Companion</button></a>
+            </div>
+            
         </div>
         <div id="sos">
             <a href="/spaceguy/sos">
