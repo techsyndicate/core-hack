@@ -1,12 +1,5 @@
 <% layout('layout') -%>
     <style>
-      .container {
-        max-width: 800px;
-        margin: 10vh auto;
-        border-radius: 10px;
-        padding: 20px;
-        border: 1px solid #545454;
-      }
       h1 {
         color: #fd532f;
         text-align: center;
@@ -60,11 +53,26 @@
         width: 100%;
         height: 150px;
       }
+
+      #main {
+            background-color: #111;
+            width: 60vw;
+            border: 1px solid #545454;
+            border-radius: 15px;
+            padding: 2vmin;
+            margin : 10vh 0;
+        }
+
+        body {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <body>
-      <nav><a href="/spaceguy">&#9664; Back to dashboard</a></nav>
-      <div class="container">
+    <div id="main">
+      <nav><a href="/spaceguy">&#8592; Back to dashboard</a></nav>
         <h1>Health Tracker</h1>
         <div class="grid">
           <div class="card">
@@ -287,5 +295,3 @@
     createMentalHealthChart(document.getElementById('cognitiveChart').getContext('2d'), 'Cognitive Score (1-10)', generateRandomData(7, 10, 7));
     createMentalHealthChart(document.getElementById('socialChart').getContext('2d'), 'Social Interaction (hours)', generateRandomData(1, 5, 7));
     </script>
-    </body>
-    </html>
