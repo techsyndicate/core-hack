@@ -1,31 +1,47 @@
 <html lang="en">
 <body>
 <style>
+    *{
+        overflow-x: hidden;
+    }
     .nav{
         display: flex;
         flex-direction: row;
         width: 100%;
         align-items: center;
-        /* justify-content: center; */
+        justify-content: space-between;
         height: 4vw;
+        font-size: 1.2vw;
+        /* gap: 20vw; */
     }
     .logo{
-        
+        margin-left: 2vw;
+    }
+    .mid-part{
+        display: flex;
+        gap: 2vw;
+        margin-right: 2vw;
+    }
+    .btn{
+        transition: 0.3s;
+    }
+    .btn:hover{
+        color: #fd532f;
     }
 </style>
 <nav class="nav">
-    <div class="logo">
-        heeyyeyey
-    </div>
+    <a href="/">
+        <div class="logo">
+            heeyyeyey
+        </div>
+    </a>
     
     <div class="mid-part">
-        <a href="/">Home</a>
-        <a href="/agency">For Agencies</a>
-        <a href="/spaceguy">Spaceguy Dashboard</a>
-    </div>
-
-    <div class="login">
-
+        <a class="btn" href="/">Home</a>
+        <a class="btn" href="/spaceguy">For Spaceguys</a>
+        <a class="btn" href="/agency">For Agencies</a>
+        <a class="btn" href="/login">Login</a>
+        <a class="btn" href="/register">Register</a>
     </div>
 </nav>    
 </body>

@@ -1,12 +1,39 @@
 <% layout('layout') -%>
-
+<%- include ./components/navLanding %>
+<style>
+    *{
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+    .hero{
+        margin-top: 10vw;
+        display: flex;
+        flex-direction: row;
+    }
+    .hero-text{
+        font-size: 5vw;
+        width: 50%;
+        margin-left: 4vw;
+    }
+</style>
     <div id="main">
 
-        <a href="/register">/register</a> <br>
-        <a href="/login">/login</a> <br>
-        <a href="/spaceguy">/spaceguy</a> <br>
-        <a href="/agency">/agency</a> <br>
-        <a href="/code">/spaceguy/code</a> <br>
-        <a href="/clean">/spaceguy/clean</a> <br>
-        <a href="/health">/spaceguy/health</a>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Rotating_earth_animated_transparent.gif" style="position: absolute; top:20%; left: 30%; aspect-ratio: 1; width: 140vw; opacity: 0.7;" alt="">
+        
+        
+        <div class="hero">
+            <div class="hero-text">
+                Welcome to Your One-Stop Destination for All Your Space needs!
+            </div>
+            <div class="features">
+                <!-- TODO:replace later with features -->
+                <a href="/register">/register</a> <br>
+                <a href="/login">/login</a> <br>
+                <a href="/spaceguy">/spaceguy</a> <br>
+                <a href="/agency">/agency</a> <br>
+                <a href="/spaceguy/code">/spaceguy/code</a> <br>
+                <a href="/spaceguy/clean">/spaceguy/clean</a> <br>
+                <a href="/spaceguy/health">/spaceguy/health</a>
+            </div>
+        </div>       
     </div>

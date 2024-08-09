@@ -15,22 +15,22 @@
             justify-content: center;
             gap: 1vh;
         }
+        .button{
+            text-decoration: none;
+            color: #fff;
+        }
     </style>
 <body>
     <div id="main">
         <h1>Hi, <%= user.fname +' '+ user.lname %></h1>
 
         <div id="buttons">
-
-            <button>Add Agency Code</button>
-            
-            <button>Report Emergency</button>
-            
-            <button>Start Junk Cleaning</button>
-            <button>Track my location</button>
-            <button>View Inventory</button>
-            <button>View Health Stats</button>
-            <button>Talk to JARVIS</button>
+            <a class="button" href="/spaceguy/sos">Report Emergency</a>            
+            <a class="button" href="/spaceguy/clean">Start Junk Cleaning</a>
+            <a class="button" href="/spaceguy/track">Track my location</a>
+            <a class="button" href="/spaceguy/food">Get food routine</a>
+            <a class="button" href="/spaceguy/health">View Health Stats</a>
+            <a class="button" href="/ai">Talk to JARVIS</a>
         </div>
     </div>
 </body>
