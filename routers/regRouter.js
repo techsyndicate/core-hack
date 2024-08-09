@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 router.get('/', (req, res) => {
-    res.render('register', {error: false})
+    res.render('register', {error: false, title:'Register'})
 })
 
 router.post('/', async (req, res) => {

@@ -5,15 +5,15 @@ const router = require('express').Router()
 
 router.get('/',ensureAuthenticated, ensurePlan, async (req,res) => { 
     console.log(req.user)
-    res.render('spaceguy', {user: req.user})
+    res.render('spaceguy', {user: req.user, title: "Spaceguy Dashboard"})
 })
 
 router.get('/tracker',ensureAuthenticated, ensurePlan, async (req, res) => {
-    res.render('tracker')
+    res.render('tracker', {title: "Tracker"})
 })
 
 router.get('/code', ensureAuthenticated,(req, res) => {
-    res.render('spaceguyLogin')
+    res.render('spaceguyLogin', {title: "Tracker"})
 })
 
 router.post('/code', async (req,res) => {
