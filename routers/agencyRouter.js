@@ -23,8 +23,8 @@ router.post('/buy', ensureAuthenticated, ensureNoPlan, async (req, res) => {
         quantity: 1,
         }],
         mode: 'payment',
-        success_url: 'https://spaceguy-cppj.onrender.com/agency/success',
-        cancel_url: 'https://spaceguy-cppj.onrender.com/agency/cancel',
+        success_url: `${domain}.onrender.com/agency/success`,
+        cancel_url: `${domain}.onrender.com/agency/cancel`,
       });
       res.redirect(303, session.url);
       await User.findOneAndUpdate({email: req.user.email}, {
