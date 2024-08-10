@@ -24,7 +24,6 @@
             }
 
             button {
-                cursor: pointer;
                 outline: none;
                 border: none;
             }
@@ -35,7 +34,6 @@
                 border-radius: 50%;
                 border: none;
                 font-weight: bold;
-                cursor: pointer;
                 font-size: 1.8em;
                 position: fixed;
                 bottom: 2vh;
@@ -68,6 +66,7 @@
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
+                width: 60vw;
                 justify-content: center;
                 align-items: start;
                 gap: 5vh;
@@ -102,7 +101,7 @@
                 color: #fd532f;
                 box-shadow: 0 4px 30px #fd532f33;
                 transition-duration: 300ms;
-                width: 15vw;
+                width: 13vw;
             }
 
             .outlined:hover {
@@ -125,6 +124,7 @@
                 <div id="mission">
                     <h2 style="color: #fd532f; ">Mission Details</h2>
                     <p>Information not yet provided by agency. Please contact your agent and ask for a description of the mission.</p>
+                    <a href="/spaceguy/tracker" style="color: #fd532f; text-decoration: none;">Track this vessel &rarr;</a>
                 </div>
                 
                 <div id="vessel">
@@ -135,16 +135,7 @@
                     </div>
                 </div>
                 <div id="cards">
-                
-                <!-- <div id="communication" class="dash-card-1">
-                    <h2>Talk to your agency</h2>
-                </div> -->
-                <!-- <div id="clean" class="dash-card-1">
-                <h2>Clean Space Debris</h2>
-                <p>Activate collection drones</p>
-                <a href="/spaceguy/clean" style="color: #fd532f; cursor: pointer;" >Get Started &#8594;</a>
-            </div> -->
-            <div class="dash-card-1">
+                            <div class="dash-card-1">
                 <a href="/spaceguy/clean"><button class="outlined">Clean Space Debris</button></a>
             </div>
             <div class="dash-card-1">
@@ -155,8 +146,7 @@
             </div>
             <div class="dash-card-1">
                 <a href="/spaceguy/ai"><button class="outlined">Talk to AI Companion</button></a>
-            </div>
-            
+            </div>            
         </div>
         <div id="sos">
             <a href="/spaceguy/sos">

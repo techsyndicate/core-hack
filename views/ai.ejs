@@ -2,27 +2,26 @@
 <%- include ./components/navLanding %>
 
 <style>
-body {
-    padding: 0;
-}
-.main{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 4vw;
-    padding: 0 20vw !important;
-    width: 100vw;
-}
-#button{
-    color: #111;
-    background-color: #fd532f;
-    padding: 1vmin 1.5vmin;
+    body {
+        padding: 0;
+    }
+    .main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 4vw;
+        padding: 0 20vw !important;
+        width: 100vw;
+    }
+    #button{
+        color: #111;
+        background-color: #fd532f;
+    padding: 1vmin;
     border-radius: 10px;
-    font-size: 2vh;
+    font-size: 3vh;
     font-weight: bold;
-    cursor: pointer;
     border: none;
-    width: 15vw;
+    width: 10vw;
 }
 #status{
     color:#fd532f;
@@ -56,21 +55,22 @@ body {
 }
 
 </style>
-<body>
-    <div class="main">
-        <h1 class="status">Shambhu is <span id="status">currently sleeping 😪</span></h1>
-        <p id="btnText">Press button to wake up Shambhu</p>
-        <div class="sochashit" style="display: none;" id="rishit">
-            <p id="sochaHua" style="display: none;"></p>
-            <div class="loaders" id="loaders">
-                <div id="skeleton-loader"></div>
-                <div style="width: 50%;" id="skeleton-loader-2"></div>
-                <div style="width: 70%; margin-bottom: 0;" id="skeleton-loader-3"></div>
-            </div>
+
+<div class="main">
+    
+    <nav><a href="/spaceguy">&#8592; Back to dashboard</a></nav>
+    <h1 class="status">Your AI companion is <span id="status">currently sleeping 😪</span></h1>
+    <p id="btnText">Press button to wake up</p>
+    <div class="sochashit" style="display: none;" id="rishit">
+        <p id="sochaHua" style="display: none;"></p>
+        <div class="loaders" id="loaders">
+            <div id="skeleton-loader"></div>
+            <div style="width: 50%;" id="skeleton-loader-2"></div>
+            <div style="width: 70%; margin-bottom: 0;" id="skeleton-loader-3"></div>
         </div>
-        <button id="button">Wake Shambhu</button>
     </div>
-</body>
+    <button id="button">Wake AI</button>
+    </div>
 <script>
     const status = document.getElementById('status')
     const btnText = document.getElementById('btnText')
@@ -262,4 +262,3 @@ body {
         }
 
 </script>
-</html>
