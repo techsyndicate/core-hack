@@ -9,6 +9,7 @@ router.get('/', ensureAuthenticated, async (req,res) => {
 })
 
 router.post('/buy', ensureAuthenticated, ensureNoPlan, async (req, res) => {
+    const domain = process.env.DOMAIN;
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: [{
@@ -22,8 +23,8 @@ router.post('/buy', ensureAuthenticated, ensureNoPlan, async (req, res) => {
         quantity: 1,
         }],
         mode: 'payment',
-        success_url: 'http://localhost:5000/agency/success',
-        cancel_url: 'http://localhost:5000/agency/cancel',
+        success_url: `${domain}/agency/success`,
+        cancel_url: `${domain}/agency/cancel`,
       });
       res.redirect(303, session.url);
       await User.findOneAndUpdate({email: req.user.email}, {
