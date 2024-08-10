@@ -27,7 +27,7 @@
             }
 
             .hero {
-                margin-top: 10vw;
+                margin-top: 13vw;
                 display: flex;
                 flex-direction: row;
             }
@@ -35,7 +35,7 @@
             .hero-text {
                 font-size: 5vw;
                 width: 50%;
-                margin-left: 4vw;
+                /* margin-left: 1vw; */
             }
             
             model-viewer {
@@ -126,20 +126,9 @@
 
             <div class="hero">
                 <div class="hero-text">
-                    Welcome to Your One-Stop Destination for All Your Space needs!
+                    All Your <span style="color:#fd532f; font-weight: 500;">Spaceguy</span> Needs, In One Place
                 </div>
             </div>
-        </div>
-        <div class="features" id="features">
-            <!-- TODO:replace later with features -->
-            <a href="/register">/register</a> <br>
-            <a href="/login">/login</a> <br>
-            <a href="/spaceguy">/spaceguy</a> <br>
-            <a href="/agency">/agency</a> <br>
-            <a href="/spaceguy/code">/spaceguy/code</a> <br>
-            <a href="/spaceguy/clean">/spaceguy/clean</a> <br>
-            <a href="/spaceguy/health">/spaceguy/health</a> <br>
-            <a href="/spaceguy/food">/spaceguy/food</a>
         </div>
 
 
@@ -149,19 +138,17 @@
         const nav = document.getElementById('nav');
         const main = document.getElementById('main');
         const model = document.getElementById('model');
-        const features = document.getElementById('features');
 
         loader.style.display = 'flex';
         model.style.visibility = 'hidden'
         nav.style.display = 'none'
-        features.style.display = 'none'
+
 
         setTimeout(() => {
             loader.style.display = 'none';
             nav.style.display = 'flex';
             main.style.display = 'flex';
             model.style.visibility = 'visible';
-            features.style.display = 'block';
         }, 3000);
     });
 
