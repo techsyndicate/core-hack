@@ -1,4 +1,5 @@
 <% layout('layout') -%>
+<script src="https://kit.fontawesome.com/1626222186.js" crossorigin="anonymous"></script>
 <body>
 </body>
 <button id="mainSos">SOS</button>
@@ -19,7 +20,7 @@ p {
 #mainSos{
     background-color: #FD532f;
     padding: 1vw;
-    color: white;
+    color: #111111;
     font-size: 1vw;
     border:none;
     border-radius: 1vw;
@@ -60,7 +61,7 @@ border: 1px solid rgba(255, 255, 255, 0.34);
 
 .trackLine {
     position: absolute;
-    left:21.4vw;
+    left:21.5412vw;
     height: 35vh;
     width: 3px;
     z-index: -1;
@@ -84,10 +85,11 @@ border: 1px solid rgba(255, 255, 255, 0.34);
 
 .fa-check{
     color: #111111;
-    font-size: 0.8vw;
+        
     width: auto;
     margin-left: 1.25vw;
     margin-top: 0.1vw;
+    z-index: 112837237;
 }
 .circle {
     height: 2vh;
@@ -101,6 +103,12 @@ border: 1px solid rgba(255, 255, 255, 0.34);
     color: white;
 }
 
+.sosDone{
+    background-color: #111111;
+    height: 1vh;
+    width: 1vh;
+    border-radius: 100%;
+}
 .trackBox {
     display: flex;
     flex-direction: row;
@@ -157,7 +165,7 @@ width: 20vw;
         <div class="trackChart">
             <div class="trackLine"></i></div>
             <div class="trackBox">
-                <div class="circle"><i class="fa-solid fa-check"></i></div>
+                <div class="circle"><div class="sosDone"></div></div>
                 <i class="fa-solid fa-exclamation" ></i>
                 <div class="trackDesc">
                     <p class="trackTit">SOS Received</p>
@@ -167,7 +175,7 @@ width: 20vw;
             </div>
 
             <div class="trackBox">
-                <div class="circle"><i class="fa-solid fa-check"></i></div>
+                <div class="circle"><div class="sosDone"></div></div>
                 <i class="fa-solid fa-shuttle-space fa-rotate-270"></i>
                 <div class="trackDesc">
                     <p class="trackTit">Spaceship Launched</p>
@@ -177,7 +185,7 @@ width: 20vw;
             </div>
 
             <div class="trackBox">
-                <div class="circle"><i class="fa-solid fa-check"></i></div>
+                <div class="circle"><div class="sosDone"></div></div>
 
                 <i class="fa-solid fa-rocket fa-rotate-270"></i>
                 <div class="trackDesc">
