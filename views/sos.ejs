@@ -64,14 +64,11 @@
         height: 35vh;
         width: 3px;
         z-index: -1;
-        /* Simulates border thickness */
         background: repeating-linear-gradient(to bottom,
         #8f8f8f 0,
         #8f8f8f 3px,
-        /* Dot size */
         transparent 1px,
         transparent 10px
-        /* Spacing between dots */
         );
     }
     
@@ -142,6 +139,58 @@
     .trackTit{
         font-size: 1.2vw;
     }
+    .trackMap{
+        display: flex;
+        align-items: center;
+        justify-content:space-between;
+        /* padding: 3vw; */
+        width: 75vw;
+        
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+    }
+    .mainIc{
+        height: 10vw;
+        width: 10vw;
+    }
+    .line1{
+        height: 0.3vh;
+        width: 47.5vw;
+        background-color: #8f8f8f;
+        position: absolute;
+        margin-left: 11vw;
+    }
+    .line2{
+        height: 0.3vh;
+        width: 2.2vw;
+        background-color: #8f8f8f;
+        position: absolute;
+        /* margin-left: 11vw; */
+        right:22.5vw;
+        visibility: hidden;
+        
+    }
+    .rocket{
+        width: 5vw;
+        height: 5vw;
+        position: absolute;
+        right: 22vw;
+        transition: left 0.01s
+    }
+
+    .distT{
+        margin-top: 9vh;
+        color: white;
+        position: absolute;
+    }
+    .distT2{
+        margin-top: 9vh;
+        color: white;
+        /* visibility: hidden; */
+        position: absolute;
+
+        right:22vw;
+    }
     </style>
 
 <body>
@@ -182,7 +231,7 @@
             </div>
 
             <div class="trackBox">
-                <div class="circle"><div class="sosDone"></div></div>
+                <div class="circle"></div>
 
                 <i class="fa-solid fa-rocket fa-rotate-270"></i>
                 <div class="trackDesc">
@@ -193,6 +242,16 @@
             </div>
         </div>
     </div>
+    <div class="trackMap">
+        <img class="mainIc" src="/spaceguyyyyy.png">
+        <div class="line1"></div>
+        <img class="rocket" src="/rocketguy.png">
+        <div class="line2"></div>
+        <p class="distT">asjdk</p>
+        <p class="distT2">asdkjhahksd</p>
+
+        <img class="mainIc" src="/aarthguy.png">
+    </div>
 </body>
 <script>
     function displayDateTime(){
@@ -200,7 +259,7 @@
     var day = date.getDay();
     var date_num = date.getDate();
     var month = date.getMonth();
-    console.log(month)
+    // console.log(month)
     switch (day){
         case 0:day="Sun";break;
         case 1:day="Mon";break;
@@ -211,7 +270,7 @@
         case 6: day="Sat";break;
 
     }
-    console.log(month)
+    // console.log(month)
     switch (month){
 
         case 0:month="Jan";break;
@@ -230,29 +289,50 @@
 
     }
 
-    console.log(month)
+    // console.log(month)
     var datep = document.getElementsByClassName("date")[0]
     datep.innerHTML = day + ", " + date_num.toString() + " " + month
     // console.log(day)
 
     var d = 8000;
-    var s = 25000;
+    var s = 18000;
     var eta = (d / s)*60;
 
     var dist = document.getElementsByClassName("distance")[0]
     var speed = document.getElementsByClassName("speed")[0]
     var time = document.getElementsByClassName("eta")[0]
 
+    const rocket = document.getElementsByClassName('rocket')[0];
+    var rocketX = rocket.getBoundingClientRect().left;
+
+    const line1 = document.getElementsByClassName("line1")[0];
+    var line1X = line1.getBoundingClientRect().left
+    var width1 = line1.offsetWidth;
+    // console.log(line1.getBoundingClientRect().left)
+    // console.log(width1)
+
+
+    const line2 = document.getElementsByClassName("line2")[0];
+    var width2 = line2.offsetWidth;
+    var line2X = line2.getBoundingClientRect().left;
+
+    var distT = document.getElementsByClassName("distT")[0];
+    var disttx = distT.getBoundingClientRect().left;
+    var distT2 = document.getElementsByClassName("distT2")[0];
+    var distt2x = distT2.getBoundingClientRect().left+40;
+
     speed.innerHTML = "Speed " + s +" km/h";
     // datep.innerHTML = day + ", " + date_num.toString() + " " + month
 
     setInterval(() => {
+        if (d >0){
         d-=1;
+        }
         
         
         var ran = Math.floor(Math.random() * 4001) - 2000;
 
-        if (s + ran > 16000 && s + ran < 35000){
+        if (s + ran > 16000 && s + ran < 20000){
             s+=ran
         }
 
@@ -262,7 +342,30 @@
         dist.innerHTML = "Distance "+d + " km";
         time.innerHTML="ETA " + eta + " mins";
         speed.innerHTML = "Speed " + s +" km/h";
+        
+        rocketX -= 0.1; 
+        width1 -=0.1
+        disttx =(line1X + width1)/2 + 150;
+        // console.log(disttx)
+        // distt2x=(line2X + width2)/2 + 525;
+        // console.log(disttx)
+        distT.style.left = `${disttx}px`
+        distT.innerHTML = d + " km"
+        distT2.innerHTML = 8000-d + " km"
+        // line2X -=0.68
+        rocket.style.left = `${rocketX}px`;
+        line1.style.width = `${width1}px`
+        
+        if(d<7250 && d > 0){
+            line2.style.visibility = "visible"
+            distT2.style.visibility = "visible"
+            width2 +=0.1
+            distt2x-=0.05;
+            
+            distT2.style.left = `${distt2x}px`
+            line2.style.width = `${width2}px`
 
+        }
     }, 100);
 }
 displayDateTime();
