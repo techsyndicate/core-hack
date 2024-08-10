@@ -98,6 +98,17 @@
                     opacity: 1;
                 }
             }
+            .features {
+                position: absolute;
+                top: 14vw;
+                right: 5vw;
+                margin-right: 30vw;
+                height: min-content;
+                padding: 1.5vw;
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(30px);
+            }
         </style>
         <div class="loading" id="loader" style="display: none;">
             <h1>Loading...</h1>
@@ -109,29 +120,48 @@
             <model-viewer auto-rotate id="model" loading="eager" poster="mars_cover.jpg" src="mars_model.glb" shadow-intensity="1" alt="A 3D model of a shishkebab"></model-viewer>
 
 
+            <div class="links">
+
+            </div>
+
             <div class="hero">
                 <div class="hero-text">
                     Welcome to Your One-Stop Destination for All Your Space needs!
                 </div>
             </div>
         </div>
+        <div class="features" id="features">
+            <!-- TODO:replace later with features -->
+            <a href="/register">/register</a> <br>
+            <a href="/login">/login</a> <br>
+            <a href="/spaceguy">/spaceguy</a> <br>
+            <a href="/agency">/agency</a> <br>
+            <a href="/spaceguy/code">/spaceguy/code</a> <br>
+            <a href="/spaceguy/clean">/spaceguy/clean</a> <br>
+            <a href="/spaceguy/health">/spaceguy/health</a> <br>
+            <a href="/spaceguy/food">/spaceguy/food</a>
+        </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const loader = document.getElementById('loader')
         const nav = document.getElementById('nav');
         const main = document.getElementById('main');
-        const model = document.getElementById('model')
+        const model = document.getElementById('model');
+        const features = document.getElementById('features');
 
         loader.style.display = 'flex';
         model.style.visibility = 'hidden'
         nav.style.display = 'none'
+        features.style.display = 'none'
 
         setTimeout(() => {
             loader.style.display = 'none';
             nav.style.display = 'flex';
             main.style.display = 'flex';
             model.style.visibility = 'visible';
+            features.style.display = 'block';
         }, 3000);
     });
 
