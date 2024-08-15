@@ -67,4 +67,98 @@ router.get('/success',ensureAuthenticated, (req, res) => {
     res.render('success',{userdata:userdata})
 });
 
+router.get('/spaceguy/:email', async (req,res) => {
+    const { email } = req.params
+    
+    const reqUser = await User.findOne({email: email})
+
+    const reqSpaceguy = await Spaceguy.findOne({userid: reqUser.id})
+    
+
+    res.render('indiSpace', {user: req.user, spaceguy: reqSpaceguy, reqUser: reqUser})
+})
+
+router.post('/spaceguy/:email/addTask', async (req,res) => {
+    const { email } = req.params
+    const { task } = req.body
+
+    const reqUser = await User.findOne({email: email})
+
+    const reqSpaceguy = await Spaceguy.findOne({userid: reqUser.id})
+
+    let oldTasks = reqSpaceguy.todo
+
+    console.log(oldTasks)
+    
+    oldTasks['pending'].push(task)
+
+    await Spaceguy.findOneAndUpdate({userid: reqUser.id}, {
+        $set: {
+            todo: oldTasks
+        }
+    })
+
+    return res.redirect('/agency/spaceguy/' + email)
+})
+
+router.post('/spaceguy/:email/changeMission', async (req,res) => {
+    const { email } = req.params
+    const { mission } = req.body
+
+    const reqUser = await User.findOne({email: email})
+
+    await Spaceguy.findOneAndUpdate({userid: reqUser.id}, {
+        $set: {
+            mission: mission
+        }
+    })
+
+    return res.redirect('/agency/spaceguy/' + email)
+})
+
+router.post('/spaceguy/:email/removeAgent', async (req,res) => {
+    const { email } = req.params
+
+    const reqUser = await User.findOne({email: email})
+
+    await Spaceguy.findOneAndDelete({userid: reqUser.id})
+
+    const thisAgency = await Agency.findOne({admin: req.user.id})
+
+    let oldMembers = thisAgency.registeredAgents
+
+    oldMembers.pop(reqUser.id)
+
+    await Agency.findOneAndUpdate({admin: req.user.id}, {
+        $set: {
+            registeredAgents: oldMembers
+        }
+    })
+
+    return res.redirect('/agency')
+})
+
+router.post('/spaceguy/:email/deleteTask/:task', async (req,res) => {
+    const { email, task } = req.params
+
+    const reqUser = await User.findOne({email: email})
+
+    const reqSpaceguy = await Spaceguy.findOne({userid: reqUser.id})
+
+    let oldTasks = reqSpaceguy.todo
+
+    console.log(oldTasks)
+    
+    oldTasks['pending'].pop(task)
+
+    await Spaceguy.findOneAndUpdate({userid: reqUser.id}, {
+        $set: {
+            todo: oldTasks
+        }
+    })
+
+    return res.redirect('/agency/spaceguy/' + email)
+
+})
+
 module.exports = router

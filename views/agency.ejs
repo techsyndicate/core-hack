@@ -105,10 +105,10 @@
                 <% } %>
                 <div class="agents">
                         <% for (let i = 0; i < reqAgency.registeredAgents.length; i++) { %>
-                            <div class="agent"><%= reqAgency.registeredAgents[i] %></div>
-                            <% } %>
-                        </div>
+                            <div class="agent" onclick="window.location.href='/agency/spaceguy/<%= reqAgency.registeredAgents[i] %>'"><%= reqAgency.registeredAgents[i] %></div>
+                        <% } %>
                     </div>
+                </div>
 
         <% } %>
 

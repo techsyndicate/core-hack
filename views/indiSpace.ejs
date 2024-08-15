@@ -1,0 +1,233 @@
+<% layout('layout') -%>
+<%- include ./components/navLanding %>
+<script defer src="https://kit.fontawesome.com/0f20a2b955.js" crossorigin="anonymous"></script>
+<style>
+    .agentInfo {
+        width: 75vw;
+        /* background: red; */
+        height: 90vh;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5vh;
+    }
+    .left {
+        width: 48%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        /* background: white; */
+    }
+    .top {
+        width: 100%;
+        height: 38%;
+        background: #fd532f;
+        border-radius: 10px;
+        padding: 1.5vw;
+        position: relative;
+    }
+    .bottom {
+        width: 100%;
+        height: 58%;
+        background: #fff;
+        border-radius: 10px;
+        padding: 1.5vw;
+    }
+    .right {
+        width: 49.5%;
+        height: 100%;
+        /* background: red; */
+        border: 1px solid #fff;
+        border-radius: 10px;
+        padding: 1.5vw;
+    }
+    .top > form > textarea {
+        width: 90%;
+        height: 70%;
+        margin-top: 1vh;
+        background: transparent;
+        color: #fff;
+        font-family: 'Space Grotesk';
+        border: none;
+        outline: none;
+        resize: none;
+        scrollbar-color: #fff;
+    }
+    .top > form {
+        width: 100%;
+        height: 90%;
+    }
+    .top > form > button {
+        margin-top: 13vh;
+        color: #fff;
+        background: #000;
+        outline: none;
+        border: none;
+        padding: 2vh;
+        position: absolute;
+        right: 1.5vw;
+        bottom: 1.5vw;
+    }
+    textarea::-webkit-scrollbar {
+        width: 5px;
+    }
+    textarea::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    textarea::-webkit-scrollbar-thumb {
+        background-color: #fff;
+    }
+
+    textarea::placeholder {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+
+    .bottom > h1 {
+        color: #000;
+    }
+
+    .bottom > p {
+        color: #000;
+    }
+    .bottom > form > button {
+        margin-top: 13vh;
+        color: #fff;
+        background: #000;
+        outline: none;
+        border: none;
+        padding: 2vh;
+        /* border-radius: 5px; */
+    }
+    .right {
+        position: relative;
+    }
+    .right > button {
+        position: absolute;
+        bottom: 1.5vh;
+        right: 1.5vh;
+        background: #fff;
+        color: #000;
+        font-size: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: 3vw;
+        height: 3vw;
+        outline: none;
+        border: none;
+        border-radius: 50%;
+    }
+    #addTask {
+        display: none;
+        flex-direction: row;
+        width: 90%;
+        align-items: center;
+        justify-content: space-between;
+    }
+    input {
+        background-color: transparent;
+        padding: 10px;
+        border: 1px solid #545454;
+        font-size: 1.1em;
+        border-radius: 5px;
+        width: 80%;
+    }
+    #addTask  > button {
+        padding: 10px;
+        width: 5vw;
+        background: #fd532f;
+        color: #000;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        font-size: 1.1rem;
+    }
+    .task {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 1vw;
+    }
+    .task > form > button > i {
+        color: #fd532f;
+    }
+    .task > form > button {
+        background-color: transparent;
+        outline: none;
+        border: none;
+    }
+</style>
+
+<body>
+
+    <h1 style="color: #fd532f;">Your agent</h1>
+
+    <div class="agentInfo">
+        <div class="left">
+            <div class="top">
+                <h1 style="margin: 0;">Edit mission</h1>
+                <form method="post" action="/agency/spaceguy/<%= reqUser.email %>/changeMission">
+                    <textarea placeholder="Type mission here" name="mission" type="text"><%= spaceguy.mission %></textarea>
+                    <button>Done</button>
+                </form>
+            </div>
+            <div class="bottom">
+                <h1 style="margin: 0;">Agent details</h1>
+                <p style="margin-top: 4vh;">Name: <%= reqUser.fname %> <%= reqUser.lname %></p>
+                <p>Email: <%= reqUser.email %></p>
+                <p>Type: Spaceguy</p>
+                <form action="/agency/spaceguy/<%= reqUser.email %>/removeAgent" method="post">
+                    <button>Remove from agency</button>
+                </form>
+            </div>
+        </div>
+        <div class="right">
+            <h1 style="margin: 0;">Tasks</h1>
+            
+            <% if (!spaceguy.todo) { %>
+                <p>Agent does not have any tasks yet.</p>
+                <form id="addTask" action="/agency/spaceguy/<%= reqUser.email %>/addTask" method="post">
+                    <input type="text" name="task" placeholder="Add task">
+                    <button type="submit">Done</button>
+                </form>
+            <% } else { %>
+                <p>Pending:</p>
+                <form id="addTask" action="/agency/spaceguy/<%= reqUser.email %>/addTask" method="post">
+                    <input type="text" name="task" placeholder="Add task">
+                    <button type="submit">Done</button>
+                </form>
+                <% for (let i = 0; i < spaceguy.todo['pending'].length; i++) { %>
+                    <div class="task">
+                        <form method="post" action="/agency/spaceguy/<%= reqUser.email %>/deleteTask/<%= spaceguy.todo['pending'][i] %>">
+                            <button><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                        <p><%= spaceguy.todo['pending'][i] %></p>
+                    </div>
+                <% } %>
+                
+                <p>Completed:</p>
+                <% for (let i = 0; i < spaceguy.todo['completed'].length; i++) { %>
+                    <p><%= spaceguy.todo['completed'][i] %></p>
+                <% } %>
+            <% } %>
+            <button id="addNew">+</button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    const addNewButton = document.getElementById('addNew')
+
+    addNewButton.addEventListener('click', (event) => {
+        event.preventDefault()
+
+        document.getElementById('addTask').style.display = 'flex'
+    })
+</script>

@@ -13,9 +13,12 @@ const dashDataSchema = mongoose.Schema({
         default: []
     },
     todo: {
-        type: Array,
+        type: Object,
         required: true,
-        default: []
+        default: {
+            "pending": [],
+            "completed": []
+        }
     },
     agency: reqString,
     userid: reqString
