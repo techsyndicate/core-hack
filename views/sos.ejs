@@ -60,7 +60,7 @@
     
     .trackLine {
         position: absolute;
-        left:21.5412vw;
+        left:21.46vw;
         height: 35vh;
         width: 3px;
         z-index: -1;
@@ -217,17 +217,17 @@
                     <p class="trackTit">SOS Received</p>
                     <p class="trackHead">Spaceship will be launched soon</p>
                 </div>
-                <p>12:04</p>
+                <p class="timeSos"></p>
             </div>
 
             <div class="trackBox">
-                <div class="circle"><div class="sosDone"></div></div>
+                <div class="circle"></div>
                 <i class="fa-solid fa-shuttle-space fa-rotate-270"></i>
                 <div class="trackDesc">
                     <p class="trackTit">Spaceship Launched</p>
                     <p class="trackHead">Spaceship is on your way</p>
                 </div>
-                <p>12:08</p>
+                <p class="timeLaunch"></p>
             </div>
 
             <div class="trackBox">
@@ -238,7 +238,7 @@
                     <p class="trackTit">Spaceship Reached</p>
                     <p class="trackHead">SOS ID: A78BN2 has been closed</p>
                 </div>
-                <p>12:40</p>
+                <p class="timeReach"></p>
             </div>
         </div>
     </div>
@@ -254,7 +254,22 @@
     </div>
 </body>
 <script>
+        const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const currentTime = `${hours}:${minutes}`;
+    const currentTime2 = `${hours}:${parseInt(minutes)+4}`;
+
+    var timeSos = document.getElementsByClassName("timeSos")[0]
+    timeSos.innerHTML=currentTime
+
+    var timeLaunch = document.getElementsByClassName("timeLaunch")[0]
+    timeLaunch.innerHTML=currentTime2
+
+    var timeReach = document.getElementsByClassName("timeReach")[0]
     function displayDateTime(){
+    // console.log(currentTime)
+
     const date = new Date();
     var day = date.getDay();
     var date_num = date.getDate();
@@ -297,6 +312,8 @@
     var d = 8000;
     var s = 18000;
     var eta = (d / s)*60;
+
+    
 
     var dist = document.getElementsByClassName("distance")[0]
     var speed = document.getElementsByClassName("speed")[0]
@@ -343,6 +360,9 @@
         time.innerHTML="ETA " + eta + " mins";
         speed.innerHTML = "Speed " + s +" km/h";
         
+        var currentTime3 = `${hours}:${parseInt(parseInt(minutes)+parseInt(eta))}`
+        timeReach.innerHTML = currentTime3
+
         rocketX -= 0.1; 
         width1 -=0.1
         disttx =(line1X + width1)/2 + 150;
