@@ -34,10 +34,10 @@ router.post('/buy', ensureAuthenticated, async (req, res) => {
         quantity: 1,
         }],
         mode: 'payment',
-        // success_url: `${domain}/agency/success`,
-        // cancel_url: `${domain}/agency/cancel`,
-        success_url: `http://localhost:5000/agency/success`,
-        cancel_url: `http://localhost:5000/agency/cancel`,
+        success_url: `${domain}/agency/success`,
+        cancel_url: `${domain}/agency/cancel`,
+        // success_url: `http://localhost:5000/agency/success`,
+        // cancel_url: `http://localhost:5000/agency/cancel`,
       });
 
       const id = uuidv4()
