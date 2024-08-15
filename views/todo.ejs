@@ -1,5 +1,80 @@
 <% layout('layout') -%>
     <%- include ./components/navLanding %>
+<style>
 
-    tasks
-    yes
+.tasks{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80vw;
+    gap:5.5%
+}
+
+.task{
+    margin-top: 5vw;
+    display: flex;
+    flex-direction: column;
+    height: 15vh;
+    gap: 2vh;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 23%;
+    border: 1px solid white;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.bttn{
+    width: 50%;
+    border-radius: 7px ;
+    background-color: #fd532d;
+    padding: 10px;
+}
+</style>
+
+<body>
+    <div class="main">
+        <div class="head">
+
+        </div>
+        <div class="tasks">
+            <% for(let i = 0; i<tasks.length; i++){  const path1= '/spaceguy/tasks/' %>
+                <% if (tasks[i].status == false) { %>
+                    <div class="task">
+                        <span style="color: #fd532d;"><%= tasks[i].task %> <br></span>
+                        <%= tasks[i].taskId %> <br>
+                        <!-- <%= tasks[i].status %> -->
+                        <button class="bttn" onclick="completeTask( '<%= tasks[i].taskId %>' )">marks as done</button>
+                    </div>    
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+<script>
+    function completeTask(id){
+        window.location.href=`/spaceguy/todo/${id}`
+        // fetch(`/spaceguy/todo/${id}`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ taskId: id })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.success) {
+        //         alert('Task marked as done!');
+        //     } else {
+        //         alert('Failed to mark the task as done.');
+        //     }
+        // })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        // });
+    }
+</script>

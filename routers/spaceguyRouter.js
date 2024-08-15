@@ -2,6 +2,7 @@ const {ensureAuthenticated } = require('../utils/authenticate')
 const User = require('../schemas/userSchema')
 const spaceGuySchema = require('../schemas/spaceGuySchema')
 const Agency = require('../schemas/agencySchema')
+const Task = require('../schemas/taskSchema')
 
 const router = require('express').Router()
 
@@ -66,7 +67,24 @@ router.get('/sos', async (req,res) => {
     res.render('sos')
 })
 
-router.get('/todo', ensureAuthenticated, async (req, res) => {
-    res.render('todo',{user:req.user})
+router.get('/todo', ensureAuthenticated, async (req, res) => {  
+    const tasks = await Task.find({});
+
+    res.render('todo',{user:req.user, tasks:tasks})
+    
+})
+
+router.get('/todo/:id', ensureAuthenticated, async (req, res) => {
+    try {
+        const taskId = req.params.id;
+        await Task.findOneAndUpdate(
+            { taskId: taskId },
+            { status: true }
+        );
+        res.redirect('/spaceguy/todo');
+    } catch (error) {
+        console.error('Error updating task status:', error);
+        res.status(500).send('Server error');
+    }
 })
 module.exports = router
