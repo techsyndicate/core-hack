@@ -190,13 +190,6 @@
         <div class="right">
             <h1 style="margin: 0;">Tasks</h1>
             
-            <% if (!spaceguy.todo) { %>
-                <p>Agent does not have any tasks yet.</p>
-                <form id="addTask" action="/agency/spaceguy/<%= reqUser.email %>/addTask" method="post">
-                    <input type="text" name="task" placeholder="Add task">
-                    <button type="submit">Done</button>
-                </form>
-            <% } else { %>
                 <p><b style="color: #fd532f;">Pending:</b></p>
                 <form id="addTask" action="/agency/spaceguy/<%= reqUser.email %>/addTask" method="post">
                     <input type="text" name="task" placeholder="Add task">
@@ -215,7 +208,6 @@
                 <% for (let i = 0; i < spaceguy.todo['completed'].length; i++) { %>
                     <p><%= spaceguy.todo['completed'][i] %></p>
                 <% } %>
-            <% } %>
             <button id="addNew">+</button>
         </div>
     </div>
