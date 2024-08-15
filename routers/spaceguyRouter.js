@@ -2,7 +2,6 @@ const {ensureAuthenticated } = require('../utils/authenticate')
 const User = require('../schemas/userSchema')
 const spaceGuySchema = require('../schemas/spaceGuySchema')
 const Agency = require('../schemas/agencySchema')
-const Task = require('../schemas/taskSchema')
 
 const router = require('express').Router()
 
@@ -68,23 +67,35 @@ router.get('/sos', async (req,res) => {
 })
 
 router.get('/todo', ensureAuthenticated, async (req, res) => {  
-    const tasks = await Task.find({});
+    // const tasks = await Task.find({});
 
-    res.render('todo',{user:req.user, tasks:tasks})
+    const reqSpaceGuy = await spaceGuySchema.findOne({userid: req.user.id})
+
+    res.render('todo',{user:req.user, spaceguy:reqSpaceGuy})
     
 })
 
-router.get('/todo/:id', ensureAuthenticated, async (req, res) => {
+router.post('/todo/:task', ensureAuthenticated, async (req, res) => {
+    const { task } = req.params;
+
+    const reqSpaceGuy = await spaceGuySchema.findOne({userid: req.user.id})
+
+    let oldTodos = reqSpaceGuy.todo
+
+    oldTodos["pending"].pop(task)
+    oldTodos["completed"].push(task)
+
+
     try {
-        const taskId = req.params.id;
-        await Task.findOneAndUpdate(
-            { taskId: taskId },
-            { status: true }
-        );
-        res.redirect('/spaceguy/todo');
+        await spaceGuySchema.findOneAndUpdate({userid: req.user.id}, {
+            $set: {
+                todo: oldTodos
+            }
+        })
+        return res.send("Task successfully marked as completed")
     } catch (error) {
-        console.error('Error updating task status:', error);
-        res.status(500).send('Server error');
+        console.log(error)
+        return res.send("There was an error please try again")
     }
 })
 module.exports = router

@@ -197,7 +197,7 @@
                     <button type="submit">Done</button>
                 </form>
             <% } else { %>
-                <p>Pending:</p>
+                <p><b style="color: #fd532f;">Pending:</b></p>
                 <form id="addTask" action="/agency/spaceguy/<%= reqUser.email %>/addTask" method="post">
                     <input type="text" name="task" placeholder="Add task">
                     <button type="submit">Done</button>
@@ -211,7 +211,7 @@
                     </div>
                 <% } %>
                 
-                <p>Completed:</p>
+                <p><b style="color: #fd532f;">Completed:</b></p>
                 <% for (let i = 0; i < spaceguy.todo['completed'].length; i++) { %>
                     <p><%= spaceguy.todo['completed'][i] %></p>
                 <% } %>
