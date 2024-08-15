@@ -7,7 +7,7 @@ const express = require('express'),
     flash = require('express-flash'),
     app = express(),
     passportInit = require('./utils/passport-config'),
-    { ensureAuthenticated, forwardAuthenticated, ensurePlan } = require('./utils/authenticate'),
+    { ensureAuthenticated, forwardAuthenticated } = require('./utils/authenticate'),
     PORT = process.env.PORT || 5000,
     bodyParser = require('body-parser')
     engine = require('ejs-blocks');
@@ -44,9 +44,9 @@ app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, regRouter)
 app.use('/spaceguy', ensureAuthenticated, spaceguyRouter)
-app.use('/spaceguy/ai', ensureAuthenticated,ensurePlan, aiRouter)
+app.use('/spaceguy/ai', ensureAuthenticated, aiRouter)
 app.use('/agency', ensureAuthenticated, agencyRouter)
-app.use('/spaceguy/sos', ensureAuthenticated, ensurePlan, sosRouter)
+app.use('/spaceguy/sos', ensureAuthenticated, sosRouter)
 
 
 app.get('/logout', (req, res) => {

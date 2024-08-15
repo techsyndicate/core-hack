@@ -6,9 +6,11 @@ const userSchema = mongoose.Schema({
     lname: reqString,
     email: reqString,
     password: reqString,
-    userid: reqString,
-    hasPlan: {type: Boolean, default: false},
-    planDate: {type:Date, required: false, default: null}
+    isSpaceguy: {
+        type: Boolean,
+        default: true,
+        required: true
+    }
 })
 
 module.exports = mongoose.model("User", userSchema)

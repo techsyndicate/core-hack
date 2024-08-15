@@ -1,5 +1,3 @@
-const { ensureAuthenticated, ensurePlan } = require('../utils/authenticate')
-
 const router = require('express').Router()
 const aiChatSchema = require('../schemas/aiChatSchema');
 

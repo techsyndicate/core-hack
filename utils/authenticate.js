@@ -16,24 +16,4 @@ function forwardAuthenticated(req, res, next) {
     } 
   }
 
-function ensurePlan(req, res, next) {
-  console.log(req.user)
-  if (req.user.hasPlan) {
-    return next();
-  }
-  else{
-    res.redirect('/agency')
-  } 
-}
-
-function ensureNoPlan(req, res, next) {
-  console.log(req.user)
-  if (!req.user.hasPlan) {
-    return next();
-  }
-  else{
-    res.redirect('/spaceguy')
-  } 
-}
-
-module.exports = { ensureAuthenticated, forwardAuthenticated, ensurePlan, ensureNoPlan};
+module.exports = { ensureAuthenticated, forwardAuthenticated};

@@ -107,52 +107,82 @@
             .outlined:hover {
                 transform: translateY(-10px);
             }
+            .not-spaceguy-form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .not-spaceguy-form > h1 {
+                color: #fd532f;
+            }
+            .not-spaceguy-form > button {
+                width: 7vw;
+            }
+            .not-spaceguy-form > input {
+                background-color: transparent;
+                padding: 10px;
+                border: 1px solid #545454;
+                font-size: 1.1em;
+                border-radius: 5px;
+                width: 100%;
+                margin: 2vmin 0;
+            }
+            .not-spaceguy-form > p {
+                align-self: flex-start;
+                margin: 0;
+                margin-top: 1.5vw;
+            }
         </style>
 
         <body>
-            <div id="main">
-                <h1>Hi, <span style="color: #fd532f;">
-                        <%= user.fname +' '+ user.lname %></span></h1>
-            <!-- <a class="button" href="/spaceguy/clean">Start Junk Cleaning</a>
-            <a class="button" href="/spaceguy/tracker">Track my location</a>
-            <a class="button" href="/spaceguy/food">Get food routine</a>
-            <a class="button" href="/spaceguy/health">View Health Stats</a>
-            <a class="button" href="/ai">Talk to JARVIS</a> -->
-            
-            <div id="deets">
-                
-                <div id="mission">
-                    <h2 style="color: #fd532f; ">Mission Details</h2>
-                    <p>Information not yet provided by agency. Please contact your agent and ask for a description of the mission.</p>
-                    <a href="/spaceguy/tracker" style="color: #fd532f; text-decoration: none;">Track this vessel &rarr;</a>
-                </div>
-                
-                <div id="vessel">
-                    <h2 style="color: #fd532f; ">Vessel Information</h2>
-                    <p><span style="font-weight: bold;">Vessel Name: Stellar Harvester</span> <br>
-                        A deep-space vessel equipped with robotic arms and AI, designed for debris collection and recycling. Converts space junk into usable materials, supporting mission sustainability and safety.</p>
-                        <!-- <a href="" style="color: #fd532f; cursor: pointer;" >View Inventory &#8594;</a> -->
+            <% if (spaceGuy) { %>
+                <div id="main">
+                    <h1>Hi, <span style="color: #fd532f;">
+                            <%= user.fname +' '+ user.lname %></span></h1>            
+                <div id="deets">
+                    
+                    <div id="mission">
+                        <h2 style="color: #fd532f; ">Mission Details</h2>
+                        <p>Information not yet provided by agency. Please contact your agent and ask for a description of the mission.</p>
+                        <a href="/spaceguy/tracker" style="color: #fd532f; text-decoration: none;">Track this vessel &rarr;</a>
                     </div>
+                    
+                    <div id="vessel">
+                        <h2 style="color: #fd532f; ">Vessel Information</h2>
+                        <p><span style="font-weight: bold;">Vessel Name: Stellar Harvester</span> <br>
+                            A deep-space vessel equipped with robotic arms and AI, designed for debris collection and recycling. Converts space junk into usable materials, supporting mission sustainability and safety.</p>
+                            <!-- <a href="" style="color: #fd532f; cursor: pointer;" >View Inventory &#8594;</a> -->
+                        </div>
+                    </div>
+                    <div id="cards">
+                                <div class="dash-card-1">
+                        <a href="/spaceguy/clean"><button class="outlined">Clean Space Debris</button></a>
+                    </div>
+                    <div class="dash-card-1">
+                        <a href="/spaceguy/food"><button class="outlined">View Food Inventory</button></a>
+                    </div>
+                    <div class="dash-card-1">
+                        <a href="/spaceguy/health"><button class="outlined">View Health Statistics</button></a>
+                    </div>
+                    <div class="dash-card-1">
+                        <a href="/spaceguy/ai"><button class="outlined">Talk to AI Companion</button></a>
+                    </div>            
                 </div>
-                <div id="cards">
-                            <div class="dash-card-1">
-                <a href="/spaceguy/clean"><button class="outlined">Clean Space Debris</button></a>
+                <div id="sos">
+                    <a href="/spaceguy/sos">
+                        <button id="sosButton">SOS</button>
+                    </a>
+                </div>
             </div>
-            <div class="dash-card-1">
-                <a href="/spaceguy/food"><button class="outlined">View Food Inventory</button></a>
-            </div>
-            <div class="dash-card-1">
-                <a href="/spaceguy/health"><button class="outlined">View Health Statistics</button></a>
-            </div>
-            <div class="dash-card-1">
-                <a href="/spaceguy/ai"><button class="outlined">Talk to AI Companion</button></a>
-            </div>            
-        </div>
-        <div id="sos">
-            <a href="/spaceguy/sos">
-                <button id="sosButton">SOS</button>
-            </a>
-        </div>
-    </div>
+        <% } else { %>
+            <p style="margin-top: 5vw !important; margin: 0;">You're not a spaceguy yet</p>
+            <form class="not-spaceguy-form" method="post" action="/spaceguy/code">
+                <h1>Become a SpaceGuy now</h1>
+                <p>Enter Agency code</p>
+                <input type="text" placeholder="Enter code here" name="code">
+                <button>Submit</button>
+            </form>
+        <% } %>
 </body>
 </html>

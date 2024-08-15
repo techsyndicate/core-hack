@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const User = require('../schemas/userSchema')
 const bcrypt = require('bcrypt')
-const { v4: uuidv4 } = require('uuid');
 
 
 router.get('/', (req, res) => {
@@ -20,16 +19,13 @@ router.post('/', async (req, res) => {
      if (foundUser) {
         return res.render('register', {error: "A user with this username already exists. Please enter a unique username."})
      }
-     const id = uuidv4()
      const newUser = new User({
         email: email,
         fname: fname,
         lname: lname,
-        password: await bcrypt.hash(password, 10),
-        userid: id
+        password: await bcrypt.hash(password, 10)
      })
      await newUser.save()
-   //   console.log(id)
      res.redirect('/login')
 })
 
