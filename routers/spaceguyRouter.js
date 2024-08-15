@@ -6,6 +6,10 @@ const Agency = require('../schemas/agencySchema')
 const router = require('express').Router()
 
 router.get('/',ensureAuthenticated, async (req,res) => { 
+    const agency = await Agency.findOne({admin: req.user.id})
+    if (agency) {
+        return res.redirect('/agency')
+    }
     console.log(req.user)
     const spaceGuy = await spaceGuySchema.findOne({userid: req.user.id})
     console.log("this is spaceguy",spaceGuy)
