@@ -1,7 +1,12 @@
 <% layout('layout') -%>
 <body>
-    OYEEEE
+    Payment Successful!
 
-    share this code with your spaceguys <%= userdata.userid %>
+    Redirecting....
 </body>
+<script>
+    setTimeout(() => {
+            window.location.href='/agency'
+        }, 500);
+</script>
 </html>

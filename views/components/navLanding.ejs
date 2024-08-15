@@ -94,15 +94,24 @@
             </svg>                
         </div>
     </a>
-    
-    <div class="mid-part">
-        <a class="btn" href="/">Home</a>
-        <a class="btn" href="/spaceguy">For Spaceguys</a>
-        <a class="btn" href="/agency">For Agencies</a>
-        <a class="btn" href="/spaceguy/ai">Companion</a>
-        <a class="btn" href="/login">Login</a>
-        <a class="btn" href="/register">Register</a>
-    </div>
+    <% if (user) { %>
+        <div class="mid-part">
+            <a class="btn" href="/">Home</a>
+            <a class="btn" href="/spaceguy">For Spaceguys</a>
+            <a class="btn" href="/agency">For Agencies</a>
+            <a class="btn" href="/spaceguy/ai">Companion</a>
+            <a class="btn" href="/logout">Logout</a>
+        </div>
+    <% } else if (!user) { %>
+        <div class="mid-part">
+            <a class="btn" href="/">Home</a>
+            <a class="btn" href="/spaceguy">For Spaceguys</a>
+            <a class="btn" href="/agency">For Agencies</a>
+            <a class="btn" href="/spaceguy/ai">Companion</a>
+            <a class="btn" href="/login">Login</a>
+            <a class="btn" href="/register">Register</a>
+        </div>
+    <% } %>
 </nav>    
 </body>
 </html>

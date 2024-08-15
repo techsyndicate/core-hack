@@ -16,7 +16,7 @@ router.get('/', ensureAuthenticated, async (req,res) => {
         return res.redirect('/spaceguy')
     }
 
-    res.render('agency',{userdata:userdata, reqAgency: reqAgency})
+    res.render('agency',{userdata:userdata, reqAgency: reqAgency,user:req.user})
 })
 
 router.post('/buy', ensureAuthenticated, async (req, res) => {
@@ -58,7 +58,7 @@ router.post('/buy', ensureAuthenticated, async (req, res) => {
 
 
 router.get('/cancel',ensureAuthenticated,(req, res) => {
-    res.render('cancel')
+    res.render('cancel',{user:req.user})
 });
 
 router.get('/success',ensureAuthenticated, (req, res) => {

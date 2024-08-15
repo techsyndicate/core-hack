@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 
 router.get('/', (req, res) => {
-    res.render('register', {error: false, title:'Register'})
+    res.render('register', {error: false, title:'Register',user:req.user})
 })
 
 router.post('/', async (req, res) => {

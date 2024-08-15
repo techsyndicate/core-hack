@@ -9,11 +9,11 @@ router.get('/',ensureAuthenticated, async (req,res) => {
     console.log(req.user)
     const spaceGuy = await spaceGuySchema.findOne({userid: req.user.id})
     console.log("this is spaceguy",spaceGuy)
-    res.render('spaceguy', {user: req.user, spaceGuy: spaceGuy,title: "Spaceguy Dashboard"})
+    res.render('spaceguy', {user: req.user, spaceGuy: spaceGuy,title: "Spaceguy Dashboard",user:req.user})
 })
 
 router.get('/tracker',ensureAuthenticated, async (req, res) => {
-    res.render('tracker', {title: "Tracker"})
+    res.render('tracker', {title: "Tracker",user:req.user})
 })
 
 router.post('/code', async (req,res) => {
@@ -54,15 +54,19 @@ router.post('/clean', ensureAuthenticated, (req, res)=>{
 
 
 router.get('/health', ensureAuthenticated, (req, res)=>{
-    res.render('health')
+    res.render('health',{user:req.user})
 })
 
 
 router.get('/food', ensureAuthenticated, async (req, res) => {
-    res.render('food')
+    res.render('food',{user:req.user})
 })
 
 router.get('/sos', async (req,res) => {
     res.render('sos')
+})
+
+router.get('/todo', ensureAuthenticated, async (req, res) => {
+    res.render('todo',{user:req.user})
 })
 module.exports = router
