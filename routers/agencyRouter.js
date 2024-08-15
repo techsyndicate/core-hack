@@ -64,7 +64,7 @@ router.get('/cancel',ensureAuthenticated,(req, res) => {
 router.get('/success',ensureAuthenticated, (req, res) => {
     const userdata=req.user
     // console.log(userdata)
-    res.render('success',{userdata:userdata})
+    res.render('success',{userdata:userdata, user:req.user})
 });
 
 router.get('/spaceguy/:email', async (req,res) => {
