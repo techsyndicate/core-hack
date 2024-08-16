@@ -371,7 +371,16 @@
         var minutesrn = rn.getMinutes().toString().padStart(2, '0');
         var currentTimern = `${hoursrn}:${minutesrn}`;
 
-        var currentTime3 = `${hours}:${parseInt(parseInt(minutes)+parseInt(eta))}`
+        var reachMins = parseInt(parseInt(minutes)+parseInt(eta)+4)
+        var reachHours = parseInt(hours);
+        if (reachMins>59){
+            reachMins -=60;
+            reachHours +=1;
+        }
+        
+        reachMins = reachMins.toString().padStart(2, '0');
+        reachHours = reachHours.toString().padStart(2, '0');
+        var currentTime3 = `${reachHours}:${reachMins}`
         timeReach.innerHTML = currentTime3
 
         if(currentTimern==currentTime2){
