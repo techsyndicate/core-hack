@@ -264,7 +264,10 @@
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const currentTime = `${hours}:${minutes}`;
-    const currentTime2 = `${hours}:${(parseInt(minutes)+4).toString().padStart(2, '0')}`;
+
+    var hours2 = hours;
+    
+    const currentTime2 = `${hours}:${(parseInt(minutes)+1).toString().padStart(2, '0')}`;
 
     var timeSos = document.getElementsByClassName("timeSos")[0]
     timeSos.innerHTML=currentTime
@@ -369,9 +372,10 @@
         var rn = new Date();
         var hoursrn = rn.getHours().toString().padStart(2, '0');
         var minutesrn = rn.getMinutes().toString().padStart(2, '0');
+
         var currentTimern = `${hoursrn}:${minutesrn}`;
 
-        var reachMins = parseInt(parseInt(minutes)+parseInt(eta)+4)
+        var reachMins = parseInt(parseInt(minutes)+parseInt(eta)+1)
         var reachHours = parseInt(hours);
         if (reachMins>59){
             reachMins -=60;
