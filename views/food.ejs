@@ -207,7 +207,6 @@
                 for (const [meal, percentage] of Object.entries(mealDistribution)) {
                     let mealCalories = targetCalories * percentage;
 
-                    // Ensure we have one item from each main category for main meals
                     if (meal !== 'snacks') {
                         ['protein', 'carb', 'vegetable'].forEach(category => {
                             const item = inventory.find(i => i.category === category && i.quantity > 0);
@@ -219,7 +218,6 @@
                         });
                     }
 
-                    // Fill the rest of the meal
                     while (mealCalories > 0 && inventory.some(item => item.quantity > 0)) {
                         const availableItems = inventory.filter(item => item.quantity > 0 && item.calories <= mealCalories);
                         if (availableItems.length === 0) break;
@@ -253,7 +251,5 @@
 
                 updateInventoryTable();
             }
-
-            // Initialize
             updateInventoryTable();
         </script>
