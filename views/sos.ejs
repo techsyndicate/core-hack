@@ -194,6 +194,9 @@
     .timeShow{
         width:2.5vw;
     }
+    .wait{
+        visibility: hidden;
+    }
     </style>
 
 <body>
@@ -224,7 +227,7 @@
             </div>
 
             <div class="trackBox">
-                <div class="circle"></div>
+                <div class="circle"><div class="sosDone wait"></div></div>
                 <i class="fa-solid fa-shuttle-space fa-rotate-270"></i>
                 <div class="trackDesc">
                     <p class="trackTit">Spaceship Launched</p>
@@ -363,9 +366,18 @@
         time.innerHTML="ETA " + eta + " mins";
         speed.innerHTML = "Speed " + s +" km/h";
         
+        var rn = new Date();
+        var hoursrn = rn.getHours().toString().padStart(2, '0');
+        var minutesrn = rn.getMinutes().toString().padStart(2, '0');
+        var currentTimern = `${hoursrn}:${minutesrn}`;
+
         var currentTime3 = `${hours}:${parseInt(parseInt(minutes)+parseInt(eta))}`
         timeReach.innerHTML = currentTime3
 
+        if(currentTimern==currentTime2){
+            document.getElementsByClassName("wait")[0].style.visibility="visible";
+        }
+        
         rocketX -= 0.1; 
         width1 -=0.1
         disttx =(line1X + width1)/2 + 150;
