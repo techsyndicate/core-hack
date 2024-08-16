@@ -60,7 +60,7 @@
     
     .trackLine {
         position: absolute;
-        left:21.46vw;
+        left:21.5412vw;
         height: 35vh;
         width: 3px;
         z-index: -1;
@@ -191,6 +191,9 @@
 
         right:22vw;
     }
+    .timeShow{
+        width:2.5vw;
+    }
     </style>
 
 <body>
@@ -217,7 +220,7 @@
                     <p class="trackTit">SOS Received</p>
                     <p class="trackHead">Spaceship will be launched soon</p>
                 </div>
-                <p class="timeSos"></p>
+                <div class="timeShow"><p class="timeSos"></p></div>
             </div>
 
             <div class="trackBox">
@@ -227,7 +230,7 @@
                     <p class="trackTit">Spaceship Launched</p>
                     <p class="trackHead">Spaceship is on your way</p>
                 </div>
-                <p class="timeLaunch"></p>
+                <div class="timeShow"><p class="timeLaunch"></p></div>
             </div>
 
             <div class="trackBox">
@@ -238,7 +241,7 @@
                     <p class="trackTit">Spaceship Reached</p>
                     <p class="trackHead">SOS ID: A78BN2 has been closed</p>
                 </div>
-                <p class="timeReach"></p>
+                <div class="timeShow"><p class="timeReach"></p></div>
             </div>
         </div>
     </div>
@@ -258,7 +261,7 @@
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const currentTime = `${hours}:${minutes}`;
-    const currentTime2 = `${hours}:${parseInt(minutes)+4}`;
+    const currentTime2 = `${hours}:${(parseInt(minutes)+4).toString().padStart(2, '0')}`;
 
     var timeSos = document.getElementsByClassName("timeSos")[0]
     timeSos.innerHTML=currentTime
