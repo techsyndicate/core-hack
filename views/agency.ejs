@@ -100,15 +100,18 @@
                 </div>
                 
                 <h1>Your agents</h1>
-                <% if (!reqAgency.registeredAgents) { %>
+                <% if (reqAgency.registeredAgents.length == 0) { %>
                     <p>You don't have any registered agents currently</p>
                 <% } %>
-                <div class="agents">
-                        <% for (let i = 0; i < reqAgency.registeredAgents.length; i++) { %>
-                            <div class="agent" onclick="window.location.href='/agency/spaceguy/<%= reqAgency.registeredAgents[i] %>'"><%= reqAgency.registeredAgents[i] %></div>
-                        <% } %>
+                <% if (user != null) { %>
+                    <div class="agents">
+                            <% for (let i = 0; i < reqAgency.registeredAgents.length; i++) { %>
+                                <div class="agent" onclick="window.location.href='/agency/spaceguy/<%= reqAgency.registeredAgents[i] %>'"><%= reqAgency.registeredAgents[i] %></div>
+                            <% } %>
+                        </div>
                     </div>
-                </div>
+                <% } %>
+
 
         <% } %>
 
